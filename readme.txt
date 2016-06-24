@@ -54,6 +54,9 @@ No upgrade
 
 == Changelog ==
 
+= 2.1 =
+* change strategy about data : post to meta
+
 = 2.0.0 =
 * Change name
 * add more custom fields

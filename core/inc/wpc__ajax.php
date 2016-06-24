@@ -53,7 +53,7 @@ class WPComponent__ajax
         );
         $posts_array = get_posts( $args ); 
 
-        $options = '<option>Select post</option>';
+        $options = '<option>'. __('Select post') .'</option>';
 
         foreach ( $posts_array as $post_type ) {
             $options.= '<option value="' . $post_type->ID . '">' . $post_type->post_title . '</option>';

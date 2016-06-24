@@ -102,12 +102,12 @@ class WPComponent__admin
 
 
 			if (empty($_FILES['wpcomponent_file_import']['tmp_name'])) {
-				echo 'no files';
+				echo __('no files');
 				return;
 			}
 
 			if (!current_user_can('publish_pages') || !current_user_can('publish_posts')) {
-				echo 'no can';
+				echo __('no can');
 				return;
 			}
 
@@ -209,14 +209,14 @@ class WPComponent__admin
 	    		<li>
 	    			<h2>
 		    			<a class="active" href="general">
-		    				General
+		    				<?php _e('General') ?>
 		    			</a>
 	    			</h2>
 	    		</li>
 	    		<li>
 	    			<h2>
 		    			<a href="importexport">
-		    				Import/Export
+		    				<?php _e('Import/Export') ?>
 		    			</a>
 	    			</h2>
 	    		</li>
@@ -236,7 +236,7 @@ class WPComponent__admin
 			<div class="wpc__admin__tabs wpc__admin__tabs--general">
 
 				<div class="wpc__admin--card">
-					<h2>Content type enable</h2>
+					<h2><?php _e('Content type enable') ?></h2>
 
 
 					<?php
@@ -264,7 +264,7 @@ class WPComponent__admin
 				            $option_filter = 'wpcomponent_setting_enable_';
 				    ?>
 					<h4>
-						Enable for <?=$screen?>
+						<?php _e('Enable for')?> <?=$screen?>
 						<?php $checked = ( $options['wpcomponent_setting_enable_' . $screen ] != 'false') ? 'checked' : ''; ?>
 						<input type="checkbox" name="wpcomponent_setting_enable_<?=$screen?>" value="<?php echo $options['wpcomponent_setting_enable_' . $screen ]; ?>" class="js-switch-settings" <?=$checked?> />
 					</h4>
@@ -278,9 +278,9 @@ class WPComponent__admin
 
 
 				<div class="wpc__admin--card">
-					<h2>Components selector</h2>
+					<h2><?php _e('Components selector') ?></h2>
 					<h4>
-						Disable Default Components
+						<?php _e('Disable Default Components') ?>
 						<?php $checked = ( $options['wpcomponent_setting_disable_mt_plugin'] === 'true' ) ? 'checked' : ''; ?>
 						<input type="checkbox" name="wpcomponent_setting_disable_mt_plugin" value="<?php echo $options['wpcomponent_setting_disable_mt_plugin']; ?>" class="js-switch-settings" <?=$checked?> />
 					</h4>
@@ -301,7 +301,7 @@ class WPComponent__admin
 					</h4>
 				</div> -->
 				<div class="wpc__admin--card">
-					<h4>Say to world how WPComponent is awesome!</h4>
+					<h4><?php _e('Say to world how WPComponent is awesome!') ?></h4>
 					<a class="twitter-share-button"
 					  href="https://twitter.com/intent/tweet?text=Check%20this%20modular%20@WordPress%20content%20builder!&amp;url=http://www.wpcomponent.com">
 					Tweet</a>
@@ -315,15 +315,15 @@ class WPComponent__admin
 				<!-- Import CARD -->
 				<div class="wpc__admin--card">
 
-					<h2>Import your Components</h2>
+					<h2><?php _e('Import your Components') ?></h2>
 
 				    <form method="post" enctype="multipart/form-data" name="import" action="admin.php?page=wpcomponent&amp;tabs=importexport&amp;action=import">
 				        <!-- File input -->
-				        <p><label for="wpcomponent_file_import">Upload file:</label><br/>
+				        <p><label for="wpcomponent_file_import"><?php _e('Upload file:')?></label><br/>
 				        <input name="wpcomponent_file_import" id="wpcomponent_file_import" type="file" value="" /></p>
-						<p>Must be a Zip file of your "wpcomponent" folder<br/>
-						or a Components folder</p>
-				        <p class="submit"><input type="submit" class="button button-blue" name="submit" value="Import" /></p>
+						<p><?php _e('Must be a Zip file of your "wpcomponent" folder')?><br/>
+						<?php _e('or a Components folder')?></p>
+				        <p class="submit"><input type="submit" class="button button-blue" name="submit" value="<?php _e('Import')?>" /></p>
 				    </form>
 
 				</div>
@@ -332,9 +332,9 @@ class WPComponent__admin
 
 				<!-- Export CARD -->
 				<div class="wpc__admin--card">
-					<h2>Export current used theme "wpcomponent" folder.</h2>
+					<h2><?php _e('Export current used theme "wpcomponent" folder.')?></h2>
 				    <form method="post" name="export" enctype="multipart/form-data" action="admin.php?page=wpcomponent&amp;tabs=importexport&amp;action=export">
-				        <input type="submit" class="button" name="submit" value="Export" />
+				        <input type="submit" class="button" name="submit" value="<?php _e('Export')?>" />
 				    </form>
 				</div>
 				<!-- // Export CARD -->

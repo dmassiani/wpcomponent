@@ -52,12 +52,16 @@ class WPComponent__kickstarter
     public $wpc__structure;
     public $wpc__utility;
 
-	public $name = "wpc__content";
+	// public $name = "wpc__content";
 	public $wpc__templates;
 
 	public function __construct(){
 
-		load_textdomain('WPComponent', WPC_DIR . 'core/lang/wpc-' . get_locale() . '.mo');
+		load_plugin_textdomain(
+			'wpcomponent',
+			false,
+			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/core/lang/'
+		);
 
 		add_action('init', array($this, 'init'), 1);
 
@@ -65,18 +69,18 @@ class WPComponent__kickstarter
 
     public function init(){
 
-		register_post_type( $this->name ,
-			array(
-				'labels' => array(
-				'name' => __( $this->name ),
-				'singular_name' => __( $this->name )
-			),
-			'public' => false,
-			'has_archive' => false,
-			)
-		);
+		// register_post_type( $this->name ,
+		// 	array(
+		// 		'labels' => array(
+		// 		'name' => __( $this->name ),
+		// 		'singular_name' => __( $this->name )
+		// 	),
+		// 	'public' => false,
+		// 	'has_archive' => false,
+		// 	)
+		// );
 		
-	    remove_post_type_support( $this->name, 'title' );
+	 //    remove_post_type_support( $this->name, 'title' );
 
 
     	$this->WPComponent__include__front__class();
@@ -207,7 +211,7 @@ class WPComponent__kickstarter
 		);
 
 		$scripts[] = array(
-			'handle'	=> 'settings',
+			'handle'	=> 'wpc-settings',
 			'src'		=> WPC_URL . '/front/js/settings.js',
 			'deps'		=> array('jquery','switchery')
 		);

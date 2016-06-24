@@ -242,7 +242,16 @@ class WPComponent__post
 
 									$slug_id = $wpc__newpost['slug_ID'];
 
-									$wpdb->query('UPDATE {$wpdb->prefix}postmeta SET meta_value="' . $wpc__newpost['post_content'] .'" WHERE meta_id="'.$slug_id.'"');
+									$wpdb->query( 
+										$wpdb->prepare( 
+											"
+									        UPDATE $wpdb->postmeta
+											SET meta_value = %d
+											AND meta_id = %s
+											",
+										    $wpc__newpost['post_content'], $slug_id
+									        )
+									);
 
 								}
 
