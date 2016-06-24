@@ -16,13 +16,36 @@ class WPComponent__remover
 
 	public function WPComponent__remove__elements() {
 
+		global $wpdb;
 
 		if( !empty( $this->elements ) ){
 
 			$elements = explode( ',', trim(urldecode($this->elements)) );
 
 			foreach ($elements as $key => $element) {
-				wp_delete_post( $element );
+
+				/** 
+				 * $element représente l'id du meta à supprimer
+				 *
+				 */
+				$meta = get_metadata_by_mid ( 'post' , $element );
+
+			    // [meta_id] => 1435
+			    // [post_id] => 1441
+			    // [meta_key] => anchor
+			    // [meta_value] => anchor test
+
+				$wpdb->query( 
+					$wpdb->prepare( 
+						"
+				        DELETE FROM $wpdb->postmeta
+						WHERE post_id = %d
+						AND meta_id = %s
+						",
+					    $meta->post_id, $meta->meta_id
+				        )
+				);
+
 			}
 
 			$this->meta__elements;
@@ -38,7 +61,7 @@ class WPComponent__remover
 
 		$post__id = $this->parent;
 		// on retrouve la meta pour le post
-		$metas = get_post_meta( $post__id, '_wpc_content', true );
+		$metas = get_post_meta( $post__id, '_wpc_structure', true );
 		$elements = explode( ',', trim(urldecode($this->elements)) );
 
 		// pour chaque metabox
@@ -55,7 +78,7 @@ class WPComponent__remover
 			
 				foreach ($elements as $key_element => $id):
 
-					if( (int) $id === (int) $content['ID'] ){
+					if( (int) $id === (int) $content['slug_ID'] ){
 						$remover__key = $log__key;
 					}
 
@@ -74,7 +97,7 @@ class WPComponent__remover
 		// pour chaque meta on reinitialise le code metabox
 
 		// on update les metas
-		update_post_meta( $post__id, '_wpc_content', $metas );
+		update_post_meta( $post__id, '_wpc_structure', $metas );
 
 		echo 'done';
 	}

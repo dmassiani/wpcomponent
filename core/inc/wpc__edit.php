@@ -44,11 +44,14 @@ class WPComponent__edit
 
 		*/
 		// --------------------------------------------------
-		$data = get_post_meta( $post->ID, '_wpc_content', true );
+		$data = get_post_meta( $post->ID, '_wpc_structure', true );
+		// global $post;
 
 
 
 		if( ! empty( $data ) ):
+
+			$editeur->postID 		= $post->ID;
 
 
 			foreach ($data as $key => $metabox):
@@ -63,8 +66,8 @@ class WPComponent__edit
 				$editeur->folder_type 	= $metabox['folder_type'];
 				$editeur->folder 		= $metabox['folder'];
 				$editeur->file 			= $metabox['file'];
-				$editeur->postID 		= $post->ID;
 				$editeur->options 		= null;
+
 				// --------------------------------------------------
 				/*
 					$fileSlugs représente la structure SLUG du fichier concerné
@@ -89,12 +92,12 @@ class WPComponent__edit
 				foreach ($metabox['content'] as $i => $content):
 
 					$contentStructure[ $content['slug'] ] = [
-						'ID' => $content['ID'],
-						'type' => $content['type']
+						// 'ID' 			=> $content['ID'],
+						'slug_ID' 		=> $content['slug_ID'],
+						'type' 			=> $content['type']
 					];
 
 				endforeach;
-
 
 				// --------------------------------------------------
 				/*
@@ -130,20 +133,23 @@ class WPComponent__edit
 					$currentSlug = NULL;
 
 
-					$editeur->ID 			= '';
+					// $editeur->ID 			= '';
 					$editeur->content 		= '';
 
 
 					if( isset( $contentStructure[ $slug ] ) ){
 
-						$post = get_post( $contentStructure[ $slug ]['ID'] );
+						// $post = get_post( $contentStructure[ $slug ]['ID'] );
+						$data = get_metadata_by_mid ( 'post' , $contentStructure[ $slug ]['slug_ID'] );
 
-						$editeur->ID 			= $post->ID;
-						$editeur->content 		= $post->post_content;
-						$metabox__structure[] 	= $post->ID;
+						// $editeur->ID 			= $post->ID;
+						$editeur->slug_ID 		= $contentStructure[ $slug ]['slug_ID'];
+						$editeur->content 		= $data->meta_value;
+						$metabox__structure[] 	= $contentStructure[ $slug ]['slug_ID'];
 						$editeur->elementsRemove = implode(',', $metabox__structure);
 
 					}
+
 
 					switch ( $slugType ) {
 						case 'image':

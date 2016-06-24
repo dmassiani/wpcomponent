@@ -30,13 +30,14 @@ function get_component( $slug = false, $echo = false, $size = false ) {
 
 	    if( $element['slug'] === $slug ){
 
-	        $the_chapter_ID = $element['ID'];
+	        $the_chapter_slugID = $element['slug_ID'];
+
 	        $type = $element['type'];
 
 	        switch( $type ) {
 
 	        	case 'image' :
-	        		return get_wpc_illustration( $slug, $size, $echo );
+	        		return get_wpc_illustration( $slug, $echo, $size );
 	        		break;
 
 	        	case 'editor' :
@@ -77,7 +78,7 @@ function get_component( $slug = false, $echo = false, $size = false ) {
  *
  *
  */
-function get_wpc_illustration( $slug = false, $size = false, $echo = false ){
+function get_wpc_illustration( $slug = false, $echo = false, $size = false ){
 
 	global $post;
 	global $wpc__stories;
@@ -94,23 +95,28 @@ function get_wpc_illustration( $slug = false, $size = false, $echo = false ){
 
 	    if( $element['slug'] === $slug ){
 
-	        $the_chapter_ID = $element['ID'];
+	        $the_chapter_slugID = $element['slug_ID'];
+	        break;
 
 	    }
 
 	}
 
-	if( !empty( $the_chapter_ID ) ):
-		
-		$the__chapter = get_post( $the_chapter_ID );
+	if( !empty( $the_chapter_slugID ) ):
+
+		$the__chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
+
+
 		if( $echo ){
-			$image = wp_get_attachment_image_src( $the__chapter->post_content, $size );
+			
+			echo wp_get_attachment_image( $the__chapter->meta_value, $size );
+
+		}else{
+			$image = wp_get_attachment_image_src( $the__chapter->meta_value, $size );
 
 			if( $image ) {
 			    echo $image[0];
 			}
-		}else{
-			echo wp_get_attachment_image( $the__chapter->post_content, $size );
 		}
 
 	endif;
@@ -137,17 +143,17 @@ function get_wpc_chapter( $slug = false, $echo = false ){
 
 		if( $element['slug'] === $slug ){
 
-			$the_chapter_ID = $element['ID'];
+			$the_chapter_slugID = $element['slug_ID'];
 			break;
 
 		}
 
 	}
 
-	if( !empty( $the_chapter_ID ) ):
+	if( !empty( $the_chapter_slugID ) ):
 
-		$the__chapter = get_post( $the_chapter_ID );
-		$wpc__data = apply_filters('the_content', $the__chapter->post_content );
+		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
+		$wpc__data = apply_filters('the_content', $data->meta_value );
 
 		if( $echo ){
 			echo $wpc__data;
@@ -179,18 +185,21 @@ function get_wpc_title( $slug = false, $echo = false ){
 
 		if( $element['slug'] === $slug ){
 
-			$the_chapter_ID = $element['ID'];
+			$the_chapter_slugID = $element['slug_ID'];
+			break;
 
 		}
 
 	}
 
-	if( !empty( $the_chapter_ID ) ):
-		$the__chapter = get_post( $the_chapter_ID );
+
+
+	if( !empty( $the_chapter_slugID ) ):
+		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo $the__chapter->post_content;
+			echo $data->meta_value;
 		}else{
-			return $the__chapter->post_content;
+			return $data->meta_value;
 		}
 	endif;
 
@@ -216,18 +225,19 @@ function get_wpc_option( $slug = false, $echo = false ){
 
 		if( $element['slug'] === $slug ){
 
-			$the_chapter_ID = $element['ID'];
+			$the_chapter_slugID = $element['slug_ID'];
+			break;
 
 		}
 
 	}
 
-	if( !empty( $the_chapter_ID ) ):
-		$the__chapter = get_post( $the_chapter_ID );
+	if( !empty( $the_chapter_slugID ) ):
+		$the__chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo $the__chapter->post_content;
+			echo $the__chapter->meta_value;
 		}else{
-			return $the__chapter->post_content;
+			return $the__chapter->meta_value;
 		}
 	endif;
 
@@ -253,18 +263,19 @@ function get_wpc_link( $slug = false, $echo = false ){
 
 		if( $element['slug'] === $slug ){
 
-			$the_chapter_ID = $element['ID'];
+			$the_chapter_slugID = $element['slug_ID'];
+			break;
 
 		}
 
 	}
 
-	if( !empty( $the_chapter_ID ) ):
-		$the__chapter = get_post( $the_chapter_ID );
+	if( !empty( $the_chapter_slugID ) ):
+		$the__chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo get_permalink( $the__chapter->post_content);
+			echo get_permalink( $the__chapter->meta_value);
 		}else{
-			return get_permalink( $the__chapter->post_content);
+			return get_permalink( $the__chapter->meta_value);
 		}
 	endif;
 
@@ -277,7 +288,18 @@ function define_stories(){
 
 	if( empty( $post ) || !is_numeric( $post->ID ) || is_admin() ) return;
 
+	/**
+	 * @since 2.0.1
+	 * update _wpc_content to _wpc_structure
+	 * upgrade use _wpc_structure
+	 *
+	 *
+	 */
+
 	$metas = get_post_meta( $post->ID, '_wpc_content', true );
+	if ( empty( $metas ) ):
+		$metas = get_post_meta( $post->ID, '_wpc_structure', true );
+	endif;
 
 	if( ! empty( $metas ) ):
 
@@ -315,8 +337,6 @@ function the_wpc() {
 	global $wpc__current__wpc;
 
 	if( empty( $wpc__stories ) ) define_stories();
-
-
 	if( empty( $wpc__stories ) ) return;
 
 	foreach ($wpc__stories as $key => $wpc):

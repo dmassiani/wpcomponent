@@ -30,14 +30,14 @@ class WPComponent__post
 
 				$wpc__posts 		= $_POST['wpc__post__'];
 				$wpc__templates 	= $_POST['wpc__template__'];
-				$wpc__folder_types= $_POST['wpc__folder_type__'];
+				$wpc__folder_types	= $_POST['wpc__folder_type__'];
 				$wpc__folder 		= $_POST['wpc__folder__'];
 				$wpc__types 		= $_POST['wpc__type__'];
 				$wpc__files 		= $_POST['wpc__file__'];
 				$wpc__slugs 		= $_POST['wpc__slug__'];
-				$wpc__metabox 	= $_POST['metabox__id'];
+				$wpc__metabox 		= $_POST['metabox__id'];
 				$wpc__images 		= $_POST['wpc__image__id'];
-				$wpc__ID 			= $_POST['wpc__ID'];
+				$wpc__slug_ID 		= $_POST['wpc__slug_ID'];
 				
 
 				if( !empty( $_POST['wpc__title__'] ) ):
@@ -111,6 +111,8 @@ class WPComponent__post
 
 					// on a du post alors on y va :)
 					// on boucle sur les wpc__post
+					global $wpdb;
+
 
 					$update__content = false;
 					$update__meta = true;
@@ -172,11 +174,13 @@ class WPComponent__post
 								);
 
 								// s'il s'agit d'un update
-								$keyTrimed = trim($wpc__ID[ $key__element ]);
-								if( !empty( $keyTrimed ) ){
+								$keyTrimed = trim($wpc__slug_ID[ $key__element ]);
 
+								if( !empty( $keyTrimed ) ){
+									
 									// on indique à wordpress un ID pour signifier d'updater
-									$wpc__newpost['ID'] = $wpc__ID[ $key__element ];
+									// $wpc__newpost['ID'] = $wpc__ID[ $key__element ];
+									$wpc__newpost['slug_ID'] = $wpc__slug_ID[ $key__element ];
 									$update__content = true;
 
 								}
@@ -230,21 +234,23 @@ class WPComponent__post
 
 
 								if( $update__content === false){
-									$wpc__id = wp_insert_post( $wpc__newpost );
-									$update__meta = true;
 
+									$update__meta = true;
+									$slug_id = add_post_meta( $post_id, $element->slug, $wpc__newpost['post_content'] );
 
 								}else{
-									wp_update_post( $wpc__newpost );
-									$wpc__id = $wpc__newpost['ID'];
+
+									$slug_id = $wpc__newpost['slug_ID'];
+
+									$wpdb->query('UPDATE {$wpdb->prefix}postmeta SET meta_value="' . $wpc__newpost['post_content'] .'" WHERE meta_id="'.$slug_id.'"');
+
 								}
 
 
-
 								$meta__content[] = array(
-									'ID' => $wpc__id,
-									'type' => $element->type,
-									'slug' => $element->slug
+									'type' 		=> $element->type,
+									'slug' 		=> $element->slug,
+									'slug_ID' 	=> $slug_id
 								);
 
 								$key__element++;
@@ -268,11 +274,11 @@ class WPComponent__post
 					if( $update__meta === true ):
 						// il y a eu un nouvel enregistrement
 
-						update_post_meta( $post_id, '_wpc_content', $metas );
+						update_post_meta( $post_id, '_wpc_structure', $metas );
 
 					else:
 
-						add_post_meta( $post_id, '_wpc_content', $metas, true );
+						add_post_meta( $post_id, '_wpc_structure', $metas, true );
 
 					endif;
 
