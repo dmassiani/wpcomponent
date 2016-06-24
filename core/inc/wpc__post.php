@@ -242,6 +242,25 @@ class WPComponent__post
 
 									$slug_id = $wpc__newpost['slug_ID'];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+									// $wpdb->query( 
+									// 	$wpdb->prepare( 
+									// 		"
+									//         UPDATE $wpdb->postmeta
+									// 		SET meta_value = %d
+									// 		AND meta_id = %s
+									// 		",
+									// 	    $wpc__newpost['post_content'], $slug_id
+									//         )
+									// );
+
+									$content = $wpc__newpost['post_content'];
+
+									$wpdb->query("UPDATE $wpdb->postmeta SET meta_value=$content WHERE meta_id=$slug_id");
+=======
+=======
+>>>>>>> f2c6b4a4ce6af3da300b8f9bebcae3d8d7765db7
 									$wpdb->query( 
 										$wpdb->prepare( 
 											"
@@ -252,6 +271,12 @@ class WPComponent__post
 										    $wpc__newpost['post_content'], $slug_id
 									        )
 									);
+
+									// $wpdb->query('UPDATE {$wpdb->prefix}postmeta SET meta_value="' . $wpc__newpost['post_content'] .'" WHERE meta_id="'.$slug_id.'"');
+<<<<<<< HEAD
+>>>>>>> f2c6b4a4ce6af3da300b8f9bebcae3d8d7765db7
+=======
+>>>>>>> f2c6b4a4ce6af3da300b8f9bebcae3d8d7765db7
 
 								}
 
