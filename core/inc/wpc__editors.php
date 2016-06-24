@@ -491,7 +491,7 @@ class WPComponent__editors
 								$value = $this->content;
 							?>
 							<select name="wpc__optionselect__[]">
-								<option>Select a value</option>
+								<option><?php _e('Select a value')?></option>
 								<?php
 
 									foreach ($select_options as $key => $val) {
