@@ -15,7 +15,7 @@ Text Domain: WPComponent
 
 
 // Folder name
-define ( 'WPC_VERSION', '2.0' );
+define ( 'WPC_VERSION', '2.1' );
 define ( 'WPC_FOLDER',  'wpcomponent' );
 
 define ( 'WPC_URL', plugins_url('', __FILE__) );
