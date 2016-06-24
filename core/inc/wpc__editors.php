@@ -28,6 +28,7 @@ class WPComponent__editors
     public $folder_type;
     public $folder;
     public $slug;
+    public $slug_ID;
     public $ajax;
     public $file;
     public $update = false;
@@ -240,11 +241,11 @@ class WPComponent__editors
     	// pour une mise à jour du champ
     	if( $this->update === true ){
     		?>
-    		<input type="hidden" name="wpc__ID[]" value="<?=$this->ID?>" />
+    		<input type="hidden" name="wpc__slug_ID[]" value="<?=$this->slug_ID?>" />
     		<?php
     	}else{
     		?>
-    		<input type="hidden" name="wpc__ID[]" />
+    		<input type="hidden" name="wpc__slug_ID[]" />
     		<?php
     	}
 
