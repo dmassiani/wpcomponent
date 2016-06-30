@@ -34,6 +34,8 @@
 				'value': jQuery(this).is(':checked')
 			};
 
+			console.log(ajaxurl, data);
+
 			jQuery.post( ajaxurl, data );
 		})
 		

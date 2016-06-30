@@ -6,7 +6,7 @@
 Plugin Name: WordPress Component
 Plugin URI: http://wpcomponent.com/
 Description: WPComponent enable component for web artist.
-Version: 2.0
+Version: 2.1
 Author: David Massiani
 Author URI: http://davidmassiani.com
 License: GPLv2 or later
@@ -51,23 +51,17 @@ class wpcomponent_kickstarter
     public $wpc_edit;
     public $wpc_structure;
     public $wpc_utility;
-
-	// public $name = "wpc_content";
 	public $wpc_templates;
 
 	public function __construct(){
-
-		load_plugin_textdomain(
-			'wpcomponent',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/core/lang/'
-		);
 
 		add_action('init', array($this, 'init'), 1);
 
 	}
 
     public function init(){
+
+		load_plugin_textdomain( 'wpcomponent', false, plugin_basename( dirname( __FILE__ ) ) . '/core/lang' );
 
     	$this->wpcomponent_include_front_class();
 
@@ -118,6 +112,9 @@ class wpcomponent_kickstarter
 	       	// fonction appellé après l'installation d'un thème
 	       	add_action( 'after_setup_theme', array( $this, 'wpcomponent_afterThemeActivation' ) );
 	       	add_action( 'after_switch_theme', array( $this, 'wpcomponent_afterThemeActivation' ) );
+
+	       	// maj 2.1
+	       	$this->wpc_database->wpcomponent_update_210();
 
 	    }
 

@@ -6,14 +6,35 @@
 //
 // ******************************************************
 
+/**
+ * Extract the_wpcomponent index the content
+ *
+ *
+ */
+function the_wpcomponent_inside_the_content( $content ) {
+	if( get_option( 'wpcomponent_setting_enable_inside_the_content' ) == 'true' ){	
+		ob_start();
+		get_wpc();
+		$wpcomponent_content = ob_get_contents();
+		ob_end_clean();
+		return $content . $wpcomponent_content;
+	}else{
+		return $content;
+	}
+}
+add_filter( 'the_content', 'the_wpcomponent_inside_the_content', 6 );
 
+
+/**
+ * extract component
+ *
+ *
+ */
 function the_wpcomponent( $slug = false, $size = false ) {
-
-	return get_wpcomponent( $slug, true, $size );
-
+	echo get_wpcomponent( $slug, $size );
 }
 
-function get_wpcomponent( $slug = false, $echo = false, $size = false ) {
+function get_wpcomponent( $slug = false, $size = false ) {
 
 	global $post;
 	global $wpc_stories;
@@ -37,23 +58,23 @@ function get_wpcomponent( $slug = false, $echo = false, $size = false ) {
 	        switch( $type ) {
 
 	        	case 'image' :
-	        		return get_wpc_illustration( $slug, $echo, $size );
+	        		$wpcomponent_content = get_wpc_illustration( $slug, $size );
 	        		break;
 
 	        	case 'editor' :
-	        		return get_wpc_chapter( $slug, $echo );
+	        		$wpcomponent_content = get_wpc_chapter( $slug  );
 	        		break;
 
 	        	case 'title' :
-	        		return get_wpc_title( $slug, $echo );
+	        		$wpcomponent_content = get_wpc_title( $slug );
 	        		break;
 
 	        	case 'option' :
-	        		return get_wpc_option( $slug, $echo );
+	        		$wpcomponent_content = get_wpc_option( $slug  );
 	        		break;
 
 	        	case 'link' :
-	        		return get_wpc_link( $slug, $echo );
+	        		$wpcomponent_content = get_wpc_link( $slug  );
 	        		break;
 
 	        }
@@ -63,6 +84,9 @@ function get_wpcomponent( $slug = false, $echo = false, $size = false ) {
 	    }
 
 	}
+
+	return $wpcomponent_content;
+
 
 }
 
@@ -109,13 +133,13 @@ function get_wpc_illustration( $slug = false, $echo = false, $size = false ){
 
 		if( $echo ){
 			
-			echo wp_get_attachment_image( $the_chapter->meta_value, $size );
+			return wp_get_attachment_image( $the_chapter->meta_value, $size );
 
 		}else{
 			$image = wp_get_attachment_image_src( $the_chapter->meta_value, $size );
 
 			if( $image ) {
-			    echo $image[0];
+			    return $image[0];
 			}
 		}
 
@@ -153,10 +177,11 @@ function get_wpc_chapter( $slug = false, $echo = false ){
 	if( !empty( $the_chapter_slugID ) ):
 
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		$wpc_data = apply_filters('the_content', $data->meta_value );
+		// $wpc_data = apply_filters('the_content', $data->meta_value );
+		$wpc_data = wpautop( $data->meta_value );
 
 		if( $echo ){
-			echo $wpc_data;
+			return $wpc_data;
 		}else{
 			return $wpc_data;
 		}
@@ -197,7 +222,7 @@ function get_wpc_title( $slug = false, $echo = false ){
 	if( !empty( $the_chapter_slugID ) ):
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo $data->meta_value;
+			return $data->meta_value;
 		}else{
 			return $data->meta_value;
 		}
@@ -235,7 +260,7 @@ function get_wpc_option( $slug = false, $echo = false ){
 	if( !empty( $the_chapter_slugID ) ):
 		$the_chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo $the_chapter->meta_value;
+			return $the_chapter->meta_value;
 		}else{
 			return $the_chapter->meta_value;
 		}
@@ -273,7 +298,7 @@ function get_wpc_link( $slug = false, $echo = false ){
 	if( !empty( $the_chapter_slugID ) ):
 		$the_chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			echo get_permalink( $the_chapter->meta_value);
+			return get_permalink( $the_chapter->meta_value);
 		}else{
 			return get_permalink( $the_chapter->meta_value);
 		}
@@ -329,12 +354,19 @@ function define_stories(){
 // fonction public d'affichage des histoires complètes
 function the_wpc() {
 
+	echo get_wpc();
+
+}
+// fonction public d'affichage des histoires complètes
+function get_wpc() {
+
 	// after custom query perhaps we need to reset global post
 	wp_reset_postdata();
 	
 	global $post;
 	global $wpc_stories;
 	global $wpc_current_wpc;
+	$wpcomponent_content = '';
 
 	if( empty( $wpc_stories ) ) define_stories();
 	if( empty( $wpc_stories ) ) return;
@@ -357,9 +389,11 @@ function the_wpc() {
 		$folder = $wpc['folder'];
 		$folder_type = $wpc['folder_type'];
 
-		echo get_wpcomponent_template( $name, $folder, $folder_type );
+		$wpcomponent_content.= get_wpcomponent_template( $name, $folder, $folder_type );
 
 	endforeach;
+
+	return $wpcomponent_content;
 
 }
 

@@ -107,10 +107,7 @@ class wpcomponent_post
 					$wpc_structure = new wpcomponent_structure();
 							
 					remove_action( 'save_post', array( $this, 'wpcomponent_save' ) );
-					// remove_action( 'save_post', array( $this, 'wpcomponent_savedata' ) );
 
-					// on a du post alors on y va :)
-					// on boucle sur les wpc_post
 					global $wpdb;
 
 
@@ -242,20 +239,9 @@ class wpcomponent_post
 
 									$slug_id = $wpc_newpost['slug_ID'];
 
-									// $wpdb->query( 
-									// 	$wpdb->prepare( 
-									// 		"
-									//         UPDATE $wpdb->postmeta
-									// 		SET meta_value = %d
-									// 		AND meta_id = %s
-									// 		",
-									// 	    $wpc_newpost['post_content'], $slug_id
-									//         )
-									// );
-
 									$content = $wpc_newpost['post_content'];
 
-									$wpdb->query("UPDATE $wpdb->postmeta SET meta_value=$content WHERE meta_id=$slug_id");
+									$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
 
 								}
 

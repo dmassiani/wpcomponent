@@ -44,18 +44,18 @@ Description: Section with 2 titles, 2 contents and 2 illustrations
 ?>
 Option : 
 
-<?php the_option( 'color' ) ?>
+<?php the_wpcomponent( 'color' ) ?>
 
 Option Not Echo :
 
-<?php $option = get_option( 'color' ) ?>
+<?php $option = get_wpcomponent( 'color' ) ?>
 
 <?php echo $option ?>
 
 <section> 
-	<h1>		<?php the_chapter_title( 'left_title' ) ?></h1>
-	<article>	<?php the_chapter( 'left_content' ) ?></article>
-	<aside>		<?php the_illustration( 'left_illustration' ) ?></aside>
-	<article>	<?php the_chapter( 'right_content' ) ?></article>
-	<aside>		<?php the_illustration( 'right_illustration' ) ?></aside>
+	<h1>		<?php the_wpcomponent( 'left_title' ) ?></h1>
+	<article>	<?php the_wpcomponent( 'left_content' ) ?></article>
+	<aside>		<?php the_wpcomponent( 'left_illustration' ) ?></aside>
+	<article>	<?php the_wpcomponent( 'right_content' ) ?></article>
+	<aside>		<?php the_wpcomponent( 'right_illustration' ) ?></aside>
 </section>

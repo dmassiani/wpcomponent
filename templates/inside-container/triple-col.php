@@ -10,23 +10,24 @@ Description: Section with 2 titles, 2 contents and 2 illustrations
 
 
 // load css flexbox grid bootstrap compatible
-wp_enqueue_style( 'flexboxgrid', '//cdn.jsdelivr.net/flexboxgrid/6.1.1/flexboxgrid.min.css' );
+// wp_enqueue_style( 'flexboxgrid', '//cdn.jsdelivr.net/flexboxgrid/6.1.1/flexboxgrid.min.css' );
+
 ?>
 <div class="row">
     <div class="col-xs-12
                 col-sm-6
                 col-md-6">
         <div class="box">
-        	<h2><?php the_chapter_title( 'left_title' ) ?></h2>
-        	<?php the_chapter( 'left_content' ) ?>
+        	<h2><?php the_wpcomponent( 'left_title' ) ?></h2>
+        	<?php the_wpcomponent( 'left_content' ) ?>
         </div>
     </div>
     <div class="col-xs-12
                 col-sm-6
                 col-md-6">
         <div class="box">
-        	<h2><?php the_chapter_title( 'right_title' ) ?></h2>
-        	<?php the_chapter( 'right_content' ) ?>
+        	<h2><?php the_wpcomponent( 'right_title' ) ?></h2>
+        	<?php the_wpcomponent( 'right_content' ) ?>
         </div>
     </div>
 </div>
