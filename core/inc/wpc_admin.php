@@ -141,7 +141,8 @@ class wpcomponent_admin
 		$available_options = [
 			'wpcomponent_setting_disable_mt_css',
 			'wpcomponent_setting_disable_mt_js',
-			'wpcomponent_setting_disable_mt_plugin'
+			'wpcomponent_setting_disable_plugin_component',
+			'wpcomponent_setting_enable_inside_the_content'
 		];
 
 		// je vais chercher chaque post type
@@ -279,8 +280,17 @@ class wpcomponent_admin
 					<h2><?php _e('Components selector', 'wpcomponent') ?></h2>
 					<h4>
 						<?php _e('Disable Default Components', 'wpcomponent') ?>
-						<?php $checked = ( $options['wpcomponent_setting_disable_mt_plugin'] === 'true' ) ? 'checked' : ''; ?>
-						<input type="checkbox" name="wpcomponent_setting_disable_mt_plugin" value="<?php echo $options['wpcomponent_setting_disable_mt_plugin']; ?>" class="js-switch-settings" <?=$checked?> />
+						<?php $checked = ( $options['wpcomponent_setting_disable_plugin_component'] === 'true' ) ? 'checked' : ''; ?>
+						<input type="checkbox" name="wpcomponent_setting_disable_plugin_component" value="<?php echo $options['wpcomponent_setting_disable_plugin_component']; ?>" class="js-switch-settings" <?=$checked?> />
+					</h4>
+				</div>
+
+				<div class="wpc_admin--card">
+					<h2><?php _e('Using the_content()', 'wpcomponent') ?></h2>
+					<h4>
+						<?php _e('Using the_wpcomponent() inside the_content()', 'wpcomponent') ?>
+						<?php $checked = ( $options['wpcomponent_setting_enable_inside_the_content'] === 'true' ) ? 'checked' : ''; ?>
+						<input type="checkbox" name="wpcomponent_setting_enable_inside_the_content" value="<?php echo $options['wpcomponent_setting_enable_inside_the_content']; ?>" class="js-switch-settings" <?=$checked?> />
 					</h4>
 				</div>
 
