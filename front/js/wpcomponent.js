@@ -336,6 +336,7 @@
 	$(document).on('click','.wpc_remove_element .confirm .delete', function(e) {
 		e.preventDefault();
 
+		var isFirst = false;
 		var buttonRemove = $(this);
 		var elements = buttonRemove.closest('.wpc_remove_element').data('elements');
 
@@ -345,17 +346,27 @@
 			'parent': jQuery('#post_ID').val()
 		};
 
+
 		if( elements != '' ){
 
-			$.post(ajaxurl , data, function(response) {
+			$.post(ajaxurl , data, function( response ) {
+
+					if( buttonRemove.closest('.wpc_container').hasClass('wpc_container-first') ) isFirst = true;
 
 					buttonRemove.closest('.wpc_container').remove();
 					
+					/** 
+					 * Si c'est le premier on hérite la class first sur le suivant
+					 *
+					 */
+					jQuery('#post-body-content')
+						.find('.wpc_container')
+						.first()
+						.addClass('wpc_container-first');
+
 					// on supprimer aussi tout les editeurs tiny mce
 					$.each( buttonRemove.closest('.wpc_container').find('input[name="wpc_post_[]"]'), function(e){
-
 						tinymce.EditorManager.execCommand('mceRemoveEditor',true, $(this).val() );
-			
 					});
 
 					wpc_getElements();
@@ -363,7 +374,9 @@
 			});
 
 		}else{
-			buttonRemove.closest('.wpc_container').remove();
+			// buttonRemove.closest('.wpc_container').remove();
+			buttonRemove.closest('.wpc_remove_element').find('.confirm').hide();
+			buttonRemove.closest('.wpc_remove_element').find('.remover a').show();
 		}
 
 

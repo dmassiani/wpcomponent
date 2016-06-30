@@ -19,7 +19,7 @@ Description: Section with 2 titles, 2 contents and 2 illustrations
 /*
 ==============================================================================
 
-	Place this file into --yourtheme--/storytelling/macro-template-name.php 
+	Place this file into --yourtheme--/wpcomponent/macro-template-name.php 
 	and go to admin to see your new content management
 
 	LINK 
