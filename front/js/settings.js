@@ -29,7 +29,7 @@
 		elems.on('change',function(){
 
 			var data = {
-				'action': 'wpcomponent__setSetting',
+				'action': 'wpcomponent_setSetting',
 				'option': jQuery(this).attr('name'),
 				'value': jQuery(this).is(':checked')
 			};
@@ -46,14 +46,14 @@
 		// ----------------------------------------------
 		// Initialisation des tabs de l'admin
 		// ----------------------------------------------
-		jQuery('.wpc__admin--main .wpc__admin__tabs').eq(0).show();
-		jQuery('.wpc__admin--nav a').on('click', function(e){
+		jQuery('.wpc_admin--main .wpc_admin_tabs').eq(0).show();
+		jQuery('.wpc_admin--nav a').on('click', function(e){
 			e.preventDefault();
-			jQuery('.wpc__admin--nav a').removeClass('active');
+			jQuery('.wpc_admin--nav a').removeClass('active');
 			$tabs = jQuery(this).attr('href');
 			jQuery(this).addClass('active');
-			jQuery('.wpc__admin--main .wpc__admin__tabs').hide();
-			jQuery('.wpc__admin--main').find('.wpc__admin__tabs--' + $tabs ).show();
+			jQuery('.wpc_admin--main .wpc_admin_tabs').hide();
+			jQuery('.wpc_admin--main').find('.wpc_admin_tabs--' + $tabs ).show();
 		})
 
 		// -----------------------------------------------
@@ -65,13 +65,13 @@
 		var checkupStart = function(){
 
 			var data = {
-				'action': 'WPComponent__checkup'
+				'action': 'wpcomponent_checkup'
 			};
 
 			$.post( ajaxUrl, data, function(response) {
 
 				console.log(response);
-				jQuery('.wpc__admin--reponse').append(response);
+				jQuery('.wpc_admin--reponse').append(response);
 
 			});
 		}

@@ -8,14 +8,14 @@
 // ******************************************************
 
 
-class WPComponent_edit
+class wpcomponent_edit
 {
 
 	public function __construct(){
-		add_action( 'edit_form_after_editor', array( $this, 'WPComponent_getdata' ) );
+		add_action( 'edit_form_after_editor', array( $this, 'wpcomponent_getdata' ) );
 	}
 
-	public function WPComponent_getdata( $post ) {
+	public function wpcomponent_getdata( $post ) {
 
 
 		// metabox represente les metabox par groupe de template
@@ -29,8 +29,8 @@ class WPComponent_edit
 		// on récupère les templates disponibles
 		//
 		// ====================================================================
-		$wpc_structure = new WPComponent_structure();
-		$editeur = new WPComponent_editors();
+		$wpc_structure = new wpcomponent_structure();
+		$editeur = new wpcomponent_editors();
 		$editeur->update = true;
 
 		// on récupère les metas
@@ -44,7 +44,7 @@ class WPComponent_edit
 
 		*/
 		// --------------------------------------------------
-		$data = get_post_meta( $post->ID, '_wpc_structure', true );
+		$data = get_post_meta( $post->ID, '_wpcomponent_structure', true );
 		// global $post;
 
 
@@ -73,7 +73,7 @@ class WPComponent_edit
 					$fileSlugs représente la structure SLUG du fichier concerné
 				*/
 				// --------------------------------------------------		
-				$fileStructure 		= $wpc_structure->WPComponent_getFileSlugs( 
+				$fileStructure 		= $wpc_structure->wpcomponent_getFileSlugs( 
 					$metabox['folder_type'], 
 					$metabox['folder'], 
 					$metabox['file'] 
@@ -123,8 +123,8 @@ class WPComponent_edit
 
 					$editeur->slug 				= $slug;
 					$editeur->container_id 	= "wpc_editor_" . ( $container + $keyS + 1 );
-					$editeur->name 				= $wpc_structure->WPComponent_getNameFileSlug( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
-					$slugType 					= $wpc_structure->WPComponent_slugType( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
+					$editeur->name 				= $wpc_structure->wpcomponent_getNameFileSlug( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
+					$slugType 					= $wpc_structure->wpcomponent_slugType( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
 
 
 					$dataID = false;

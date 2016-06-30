@@ -1,14 +1,14 @@
 <?php
-class WPComponent_metabox
+class wpcomponent_metabox
 {
 
     public function __construct()
     {
-        load_textdomain('wpcomponent', WPC_DIR . 'lang/wpc-' . get_locale() . '.mo');
-        add_action( 'add_meta_boxes', array($this, 'wpc_addMetaBox_Sidebar') );
+        load_textdomain('wpcomponent', WPCOMPONENT_DIR . 'lang/wpc-' . get_locale() . '.mo');
+        add_action( 'add_meta_boxes', array($this, 'wpcomponent_addMetaBox_Sidebar') );
     }
 
-    public function wpc_addMetaBox_Sidebar(){
+    public function wpcomponent_addMetaBox_Sidebar(){
 
         $screens = array( 'post', 'page' );
 
@@ -36,7 +36,7 @@ class WPComponent_metabox
                 add_meta_box(
                     'wpc_selector',
                     __( 'Add a component', 'wpcomponent' ),
-                    array($this, 'wpc_addMetaBox_Sidebar_callback'),
+                    array($this, 'wpcomponent_addMetaBox_Sidebar_callback'),
                     $screen,
                     'side',
                     'core'
@@ -47,7 +47,7 @@ class WPComponent_metabox
 
     }
 
-    public function wpc_addMetaBox_Sidebar_callback(){
+    public function wpcomponent_addMetaBox_Sidebar_callback(){
 
         // --------------------------------------------------------------------
         // fonction qui affiche la meta dans la sidebar
@@ -60,9 +60,9 @@ class WPComponent_metabox
 
         // les templates à la racine du dossier ne seront pas lus
 
-        $wpc_structure = new WPComponent_structure();
-        $theme_template = $wpc_structure->WPComponent_register_Theme_folder();
-        $plugin_template = $wpc_structure->WPComponent_register_Plugin_folder();
+        $wpc_structure = new wpcomponent_structure();
+        $theme_template = $wpc_structure->wpcomponent_register_Theme_folder();
+        $plugin_template = $wpc_structure->wpcomponent_register_Plugin_folder();
 
         // ici on pourra aller chercher tout les templates inclut dans le dossier default du plugin
 

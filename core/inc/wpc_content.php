@@ -7,13 +7,13 @@
 // ******************************************************
 
 
-function the_component( $slug = false, $size = false ) {
+function the_wpcomponent( $slug = false, $size = false ) {
 
-	return get_component( $slug, true, $size );
+	return get_wpcomponent( $slug, true, $size );
 
 }
 
-function get_component( $slug = false, $echo = false, $size = false ) {
+function get_wpcomponent( $slug = false, $echo = false, $size = false ) {
 
 	global $post;
 	global $wpc_stories;
@@ -290,15 +290,15 @@ function define_stories(){
 
 	/**
 	 * @since 2.0.1
-	 * update _wpc_content to _wpc_structure
-	 * upgrade use _wpc_structure
+	 * update _wpc_content to _wpcomponent_structure
+	 * upgrade use _wpcomponent_structure
 	 *
 	 *
 	 */
 
 	$metas = get_post_meta( $post->ID, '_wpc_content', true );
 	if ( empty( $metas ) ):
-		$metas = get_post_meta( $post->ID, '_wpc_structure', true );
+		$metas = get_post_meta( $post->ID, '_wpcomponent_structure', true );
 	endif;
 
 	if( ! empty( $metas ) ):
@@ -345,10 +345,10 @@ function the_wpc() {
 		$wpc_current_wpc = $wpc;
 
     	if( $wpc['folder_type'] === 'plugin' ){
-    		$folder = WPC_DEFAULT_TEMPLATE .'/'. $wpc['folder'];
+    		$folder = WPCOMPONENT_DEFAULT_TEMPLATE .'/'. $wpc['folder'];
     	}else{
-    		// $folder = get_template_directory() . '/' . WPC_FOLDER .'/'. $wpc['folder'];
-    		$folder = get_stylesheet_directory() . '/' . WPC_FOLDER .'/'. $wpc['folder'];
+    		// $folder = get_template_directory() . '/' . WPCOMPONENT_FOLDER .'/'. $wpc['folder'];
+    		$folder = get_stylesheet_directory() . '/' . WPCOMPONENT_FOLDER .'/'. $wpc['folder'];
     	}
 
 		// remove php extension
@@ -357,13 +357,13 @@ function the_wpc() {
 		$folder = $wpc['folder'];
 		$folder_type = $wpc['folder_type'];
 
-		echo get_wpc_template( $name, $folder, $folder_type );
+		echo get_wpcomponent_template( $name, $folder, $folder_type );
 
 	endforeach;
 
 }
 
-function get_wpc_template( $wpc_name, $folder, $folder_type ){
+function get_wpcomponent_template( $wpc_name, $folder, $folder_type ){
 
 	global $post;
 	global $wpc_stories;
@@ -379,7 +379,7 @@ function get_wpc_template( $wpc_name, $folder, $folder_type ){
 		return get_template_part(  'wpcomponent/' . $folder .'/'. $wpc_name );
 	}else{
 
-		return wpcomponent_locate_template( $wpc_name, WPC_DIR . '/templates/' . $folder .'/' );
+		return wpcomponent_locate_template( $wpc_name, WPCOMPONENT_DIR . '/templates/' . $folder .'/' );
 	}
 
 }

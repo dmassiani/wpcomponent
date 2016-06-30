@@ -13,55 +13,55 @@ wordpress créé deux enregistrement, un post de type publish, un autre de type 
 
 */
 
-class WPComponent_post
+class wpcomponent_post
 {
 
 
-	public function WPComponent_save( $post_id ) {
+	public function wpcomponent_save( $post_id ) {
 
 
-			if( !empty( $_POST['wpc_post_'] )
-			&& !empty( $_POST['wpc_template_'] )
-			&& !empty( $_POST['wpc_type_'] )
-			&& !empty( $_POST['wpc_folder_type_'] )
-			&& !empty( $_POST['wpc_folder_'] )
-			&& !empty( $_POST['wpc_slug_'] )
+			if( !empty( $_POST['wpcomponent_post_'] )
+			&& !empty( $_POST['wpcomponent_template_'] )
+			&& !empty( $_POST['wpcomponent_type_'] )
+			&& !empty( $_POST['wpcomponent_folder_type_'] )
+			&& !empty( $_POST['wpcomponent_folder_'] )
+			&& !empty( $_POST['wpcomponent_slug_'] )
 			&& !empty( $_POST['metabox_id'] )){
 
-				$wpc_posts 		= $_POST['wpc_post_'];
-				$wpc_templates 	= $_POST['wpc_template_'];
-				$wpc_folder_types	= $_POST['wpc_folder_type_'];
-				$wpc_folder 		= $_POST['wpc_folder_'];
-				$wpc_types 		= $_POST['wpc_type_'];
-				$wpc_files 		= $_POST['wpc_file_'];
-				$wpc_slugs 		= $_POST['wpc_slug_'];
 				$wpc_metabox 		= $_POST['metabox_id'];
-				$wpc_images 		= $_POST['wpc_image_id'];
-				$wpc_slug_ID 		= $_POST['wpc_slug_ID'];
+				$wpc_posts 			= $_POST['wpcomponent_post_'];
+				$wpc_templates 		= $_POST['wpcomponent_template_'];
+				$wpc_folder_types	= $_POST['wpcomponent_folder_type_'];
+				$wpc_folder 		= $_POST['wpcomponent_folder_'];
+				$wpc_types 			= $_POST['wpcomponent_type_'];
+				$wpc_files 			= $_POST['wpcomponent_file_'];
+				$wpc_slugs 			= $_POST['wpcomponent_slug_'];
+				$wpc_images 		= $_POST['wpcomponent_image_id'];
+				$wpc_slug_ID 		= $_POST['wpcomponent_slug_ID'];
 				
 
-				if( !empty( $_POST['wpc_title_'] ) ):
-					$wpc_titles 		= $_POST['wpc_title_'];
+				if( !empty( $_POST['wpcomponent_title_'] ) ):
+					$wpc_titles = $_POST['wpcomponent_title_'];
 				endif;
 
-				if( !empty( $_POST['wpc_link_'] ) ):
-					$wpc_links 		= $_POST['wpc_link_'];
+				if( !empty( $_POST['wpcomponent_link_'] ) ):
+					$wpc_links = $_POST['wpcomponent_link_'];
 				endif;
 
-				if( !empty( $_POST['wpc_option_'] ) ):
-					$wpc_options 	= $_POST['wpc_option_'];
+				if( !empty( $_POST['wpcomponent_option_'] ) ):
+					$wpc_options = $_POST['wpcomponent_option_'];
 				endif;
 
-				if( !empty( $_POST['wpc_optionnumber'] ) ):
-					$wpc_optionsnumber 	= $_POST['wpc_optionnumber'];
+				if( !empty( $_POST['wpcomponent_optionnumber'] ) ):
+					$wpc_optionsnumber 	= $_POST['wpcomponent_optionnumber'];
 				endif;
 
-				if( !empty( $_POST['wpc_optionselect_'] ) ):
-					$wpc_optionsselect 	= $_POST['wpc_optionselect_'];
+				if( !empty( $_POST['wpcomponent_optionselect_'] ) ):
+					$wpc_optionsselect 	= $_POST['wpcomponent_optionselect_'];
 				endif;
 
-				if( !empty( $_POST['wpc_optionswitch_'] ) ):
-					$wpc_optionsswitch 	= $_POST['wpc_optionswitch_'];
+				if( !empty( $_POST['wpcomponent_optionswitch_'] ) ):
+					$wpc_optionsswitch 	= $_POST['wpcomponent_optionswitch_'];
 				endif;
 
 				$user_ID = get_current_user_id();
@@ -104,10 +104,10 @@ class WPComponent_post
 				// if( isset( $wpc_posts ) && count( $wpc_posts ) != 0 ){
 				if( isset( $wpc_metabox ) && count( $wpc_metabox ) != 0 ){
 
-					$wpc_structure = new WPComponent_structure();
+					$wpc_structure = new wpcomponent_structure();
 							
-					remove_action( 'save_post', array( $this, 'WPComponent_save' ) );
-					// remove_action( 'save_post', array( $this, 'WPComponent_savedata' ) );
+					remove_action( 'save_post', array( $this, 'wpcomponent_save' ) );
+					// remove_action( 'save_post', array( $this, 'wpcomponent_savedata' ) );
 
 					// on a du post alors on y va :)
 					// on boucle sur les wpc_post
@@ -152,7 +152,7 @@ class WPComponent_post
 							unset($meta_content);
 
 							// on récupère la structure de la metabox grace au nom du fichier
-							$metabox_structure = $wpc_structure->WPComponent_get_fileStructure( $folder_type, $folder, $file );
+							$metabox_structure = $wpc_structure->wpcomponent_get_fileStructure( $folder_type, $folder, $file );
 
 							// pour chaque element de la structure on retrouve sa data
 							// les elements sont théoriquement dans l'ordre.
@@ -287,11 +287,11 @@ class WPComponent_post
 					if( $update_meta === true ):
 						// il y a eu un nouvel enregistrement
 
-						update_post_meta( $post_id, '_wpc_structure', $metas );
+						update_post_meta( $post_id, '_wpcomponent_structure', $metas );
 
 					else:
 
-						add_post_meta( $post_id, '_wpc_structure', $metas, true );
+						add_post_meta( $post_id, '_wpcomponent_structure', $metas, true );
 
 					endif;
 
