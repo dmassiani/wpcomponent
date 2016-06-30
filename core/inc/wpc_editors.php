@@ -8,7 +8,7 @@
 // ******************************************************
 
 
-class WPComponent_editors
+class wpcomponent_editors
 {
 
 	public $metabox_id = 1000;
@@ -43,12 +43,12 @@ class WPComponent_editors
 		if( $this->n_metabox != 0 )$this->update = true;
 		$this->metabox_id = $this->metabox_id * ( $this->n_metabox + 1 );
 
-		$wpc_structure = new WPComponent_Structure();
+		$wpc_structure = new wpcomponent_Structure();
 
-		$structureArray = $wpc_structure->WPComponent_getFileStructure( $this->folder_type, $this->folder, $this->file );
-		$slugsArray = $wpc_structure->WPComponent_getFileSlugs( $this->folder_type, $this->folder, $this->file );
-		$namesArray = $wpc_structure->WPComponent_getFileNames( $this->folder_type, $this->folder, $this->file );
-		$this->template = $wpc_structure->WPComponent_getFileTemplate( $this->folder_type, $this->folder, $this->file );
+		$structureArray = $wpc_structure->wpcomponent_getFileStructure( $this->folder_type, $this->folder, $this->file );
+		$slugsArray = $wpc_structure->wpcomponent_getFileSlugs( $this->folder_type, $this->folder, $this->file );
+		$namesArray = $wpc_structure->wpcomponent_getFileNames( $this->folder_type, $this->folder, $this->file );
+		$this->template = $wpc_structure->wpcomponent_getFileTemplate( $this->folder_type, $this->folder, $this->file );
 
 		$this->openMetabox( $this->n_metabox );
 
@@ -151,10 +151,10 @@ class WPComponent_editors
 						<!-- inside -->
 		                <div class="wpc_content inside">
 
-							<input type="hidden" name="wpc_template_[]" value="<?=$this->template?>">
-							<input type="hidden" name="wpc_folder_type_[]" value="<?=$this->folder_type?>">
-							<input type="hidden" name="wpc_folder_[]" value="<?=$this->folder?>">
-							<input type="hidden" name="wpc_file_[]" value="<?=$this->file?>">
+							<input type="hidden" name="wpcomponent_template_[]" value="<?=$this->template?>">
+							<input type="hidden" name="wpcomponent_folder_type_[]" value="<?=$this->folder_type?>">
+							<input type="hidden" name="wpcomponent_folder_[]" value="<?=$this->folder?>">
+							<input type="hidden" name="wpcomponent_file_[]" value="<?=$this->file?>">
 				    		<input type="hidden" name="metabox_id[]" value="<?=$this->metabox_id?>">
 
 							<?php
@@ -233,19 +233,19 @@ class WPComponent_editors
 				<i class="icon -title"></i> <?=$this->name?> 
 			</h2>
 
-			<input type="hidden" name="wpc_type_[]" value="<?=$this->type?>">
-			<input type="hidden" name="wpc_slug_[]" value="<?=$this->slug?>">
-			<input type="hidden" name="wpc_post_[]" value="<?=$this->container_id?>">
+			<input type="hidden" name="wpcomponent_type_[]" value="<?=$this->type?>">
+			<input type="hidden" name="wpcomponent_slug_[]" value="<?=$this->slug?>">
+			<input type="hidden" name="wpcomponent_post_[]" value="<?=$this->container_id?>">
 
     	<?php
     	// pour une mise à jour du champ
     	if( $this->update === true ){
     		?>
-    		<input type="hidden" name="wpc_slug_ID[]" value="<?=$this->slug_ID?>" />
+    		<input type="hidden" name="wpcomponent_slug_ID[]" value="<?=$this->slug_ID?>" />
     		<?php
     	}else{
     		?>
-    		<input type="hidden" name="wpc_slug_ID[]" />
+    		<input type="hidden" name="wpcomponent_slug_ID[]" />
     		<?php
     	}
 
@@ -300,7 +300,7 @@ class WPComponent_editors
     	<div class="wpc_element-input wp-core-ui wp-title-wrap">
     		<div class="inner">
 
-					<input type="text" id="<?=$this->container_id?>_title" name="wpc_title_[]" value="<?=$this->content?>" class="text required">
+					<input type="text" id="<?=$this->container_id?>_title" name="wpcomponent_title_[]" value="<?=$this->content?>" class="text required">
 
 			</div>
 		</div>
@@ -393,7 +393,7 @@ class WPComponent_editors
 						<?=$optionsType?>
 					</select>
 
-					<select name="wpc_link_[]" id="<?=$this->container_id?>_link" class="disable">
+					<select name="wpcomponent_link_[]" id="<?=$this->container_id?>_link" class="disable">
 						<?=$options?>
 					</select>
 
@@ -432,7 +432,7 @@ class WPComponent_editors
 		    	}
 
 		    	?>
-		    	<input type="hidden" name="wpc_image_id[]" class="wpc_image_id" value="<?=$this->content?>" />
+		    	<input type="hidden" name="wpcomponent_image_id[]" class="wpc_image_id" value="<?=$this->content?>" />
     		
 				<input data-upload_image="<?=_e('Meta content Image', 'wpcomponent')?>" data-upload_image_button="<?=_e('Select Image', 'wpcomponent')?>" id="<?=$this->container_id?>_image" class="upload_image_button button<?=$hideUploader?>" type="button" value="<?php _e('Upload Image', 'wpcomponent') ?>" />
 				<div>
@@ -470,7 +470,7 @@ class WPComponent_editors
 						switch ( trim($type) ) {
 							case 'number':
 							?>
-								<input type="number" name="wpc_optionnumber_[]" value="<?=$this->content?>" class="text">
+								<input type="number" name="wpcomponent_optionnumber_[]" value="<?=$this->content?>" class="text">
 							<?php
 								break;
 
@@ -481,16 +481,16 @@ class WPComponent_editors
 								$checked = '';
 							}
 							?>
-								<input type="checkbox" name="wpc_optionswitch_[]" class="js-switch" <?=$checked?> />
+								<input type="checkbox" name="wpcomponent_optionswitch_[]" class="js-switch" <?=$checked?> />
 							<?php
 								break;
 
 							case 'select':
-								$wpc_structure = new WPComponent_Structure();
-								$select_options = explode(',',$wpc_structure->WPComponent_getSelectOption( $this->folder_type, $this->folder, $this->file, $this->slug ) );
+								$wpc_structure = new wpcomponent_Structure();
+								$select_options = explode(',',$wpc_structure->wpcomponent_getSelectOption( $this->folder_type, $this->folder, $this->file, $this->slug ) );
 								$value = $this->content;
 							?>
-							<select name="wpc_optionselect_[]">
+							<select name="wpcomponent_optionselect_[]">
 								<option><?php _e('Select a value', 'wpcomponent')?></option>
 								<?php
 
@@ -513,7 +513,7 @@ class WPComponent_editors
 
 							default:
 							?>
-								<input type="text" name="wpc_option_[]" value="<?=$this->content?>" class="text">
+								<input type="text" name="wpcomponent_option_[]" value="<?=$this->content?>" class="text">
 							<?php
 						}
 

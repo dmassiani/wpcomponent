@@ -10,17 +10,17 @@ Version: 2.0
 Author: David Massiani
 Author URI: http://davidmassiani.com
 License: GPLv2 or later
-Text Domain: WPComponent
+Text Domain: wpcomponent
 */
 
 
 // Folder name
-define ( 'WPC_VERSION', '2.1' );
-define ( 'WPC_FOLDER',  'wpcomponent' );
+define ( 'WPCOMPONENT_VERSION', '2.1' );
+define ( 'WPCOMPONENT_FOLDER',  'wpcomponent' );
 
-define ( 'WPC_URL', plugins_url('', __FILE__) );
-define ( 'WPC_DIR', dirname(__FILE__) );
-define ( 'WPC_DEFAULT_TEMPLATE', WPC_DIR .'/templates' );
+define ( 'WPCOMPONENT_URL', plugins_url('', __FILE__) );
+define ( 'WPCOMPONENT_DIR', dirname(__FILE__) );
+define ( 'WPCOMPONENT_DEFAULT_TEMPLATE', WPCOMPONENT_DIR .'/templates' );
 
 
 if(!function_exists('log_it')){
@@ -37,23 +37,23 @@ if(!function_exists('log_it')){
 }
 
 
-if( !class_exists('WPComponent__kickstarter') ):
+if( !class_exists('wpcomponent_kickstarter') ):
 
-class WPComponent__kickstarter
+class wpcomponent_kickstarter
 {
 
 	public $templates = [];
 	
-    public $wpc__ajax;
-    public $wpc__metabox;
-    public $wpc__database;
-    public $wpc__post;
-    public $wpc__edit;
-    public $wpc__structure;
-    public $wpc__utility;
+    public $wpc_ajax;
+    public $wpc_metabox;
+    public $wpc_database;
+    public $wpc_post;
+    public $wpc_edit;
+    public $wpc_structure;
+    public $wpc_utility;
 
-	// public $name = "wpc__content";
-	public $wpc__templates;
+	// public $name = "wpc_content";
+	public $wpc_templates;
 
 	public function __construct(){
 
@@ -69,31 +69,17 @@ class WPComponent__kickstarter
 
     public function init(){
 
-		// register_post_type( $this->name ,
-		// 	array(
-		// 		'labels' => array(
-		// 		'name' => __( $this->name ),
-		// 		'singular_name' => __( $this->name )
-		// 	),
-		// 	'public' => false,
-		// 	'has_archive' => false,
-		// 	)
-		// );
-		
-	 //    remove_post_type_support( $this->name, 'title' );
-
-
-    	$this->WPComponent__include__front__class();
+    	$this->wpcomponent_include_front_class();
 
 
     	if ( !is_admin() ) {
 
 	        // init structure
-	        $get__templates = new WPComponent__structure();
+	        $get_templates = new wpcomponent_structure();
 
     	}else{
 
-    		$this->WPComponent__include__admin__class();
+    		$this->wpcomponent_include_admin_class();
 
     	// ===================================================
     	// 
@@ -101,8 +87,8 @@ class WPComponent__kickstarter
     	// 
     	// ===================================================
 
-    		$this->WPComponent__register__plugins();
-    		$this->WPComponent__register__styles();
+    		$this->wpcomponent_register_plugins();
+    		$this->wpcomponent_register_styles();
 
     	// =================================================
     	//
@@ -111,27 +97,27 @@ class WPComponent__kickstarter
     	// =================================================
 
     		// init ajax
-        	$this->wpc__ajax 			= new WPComponent__ajax();
+        	$this->wpc_ajax 			= new wpcomponent_ajax();
 	    	// init metabox selector
-	        $this->wpc__metabox 		= new WPComponent__metabox();
+	        $this->wpc_metabox 			= new wpcomponent_metabox();
 	        // init database
-	        $this->wpc__database 		= new WPComponent__database();
+	        $this->wpc_database 		= new wpcomponent_database();
 	        // init post
-	        $this->wpc__post 			= new WPComponent__post();
+	        $this->wpc_post 			= new wpcomponent_post();
 	        // init edit
-	        $this->wpc__edit 			= new WPComponent__edit();
+	        $this->wpc_edit 			= new wpcomponent_edit();
 	        // init admin
-	        $this->wpc__admin 			= new WPComponent__admin();
+	        $this->wpc_admin 			= new wpcomponent_admin();
 	        // init checkup
-	        $this->wpc__admin 			= new WPComponent__checkup();
+	        $this->wpc_admin 			= new wpcomponent_checkup();
 
 	        // action quand on post du contenu
-	       	add_action( 'save_post', array( $this->wpc__post, 'WPComponent__save' ) );
+	       	add_action( 'save_post', array( $this->wpc_post, 'wpcomponent_save' ) );
 	       	// action qui ajoute le javascript
-	       	add_action( 'admin_footer', array( $this, 'WPComponent__removePageTemplate'), 10);
+	       	add_action( 'admin_footer', array( $this, 'wpcomponent_removePageTemplate'), 10);
 	       	// fonction appellé après l'installation d'un thème
-	       	add_action( 'after_setup_theme', array( $this, 'WPComponent__afterThemeActivation' ) );
-	       	add_action( 'after_switch_theme', array( $this, 'WPComponent__afterThemeActivation' ) );
+	       	add_action( 'after_setup_theme', array( $this, 'wpcomponent_afterThemeActivation' ) );
+	       	add_action( 'after_switch_theme', array( $this, 'wpcomponent_afterThemeActivation' ) );
 
 	    }
 
@@ -139,7 +125,7 @@ class WPComponent__kickstarter
 
     // remove wpcomponent template from template selector.
 
-	public function WPComponent__removePageTemplate() {
+	public function wpcomponent_removePageTemplate() {
 	    global $pagenow;
 	    if ( in_array( $pagenow, array( 'post-new.php', 'post.php') ) && get_post_type() == 'page' ) { ?>
 	        <script type="text/javascript">
@@ -151,42 +137,42 @@ class WPComponent__kickstarter
 	        </script>
 	    <?php 
 	    }
-    	$this->WPComponent__register__twitter();
+    	$this->wpcomponent_register_twitter();
 	}
 
-    public function WPComponent__include__admin__class(){
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__admin.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__database.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__metabox.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__editors.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__ajax.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__post.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__edit.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__remover.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__checkup.php';
+    public function wpcomponent_include_admin_class(){
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_admin.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_database.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_metabox.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_editors.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_ajax.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_post.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_edit.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_remover.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_checkup.php';
     }
-    public function WPComponent__include__front__class(){
+    public function wpcomponent_include_front_class(){
     	/**
     	 * Load deprecated functions
     	 * this is removed in next version
     	 */
-		include_once plugin_dir_path(__FILE__). '/core/deprecated/wpc__content.php';
+		include_once plugin_dir_path(__FILE__). '/core/deprecated/wpc_content.php';
 		
 		/**
 		 * Load functions
 		 *
 		 *
 		 */
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__content.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__utility.php';
-		include_once plugin_dir_path(__FILE__). '/core/inc/wpc__structure.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_content.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_utility.php';
+		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_structure.php';
     }
 
-    static function WPComponent__activation(){
+    static function wpcomponent_activation(){
 
     }
 
-    public function WPComponent__afterThemeActivation(){
+    public function wpcomponent_afterThemeActivation(){
 
     }
 
@@ -194,25 +180,25 @@ class WPComponent__kickstarter
     // Register JS plugins
     // ============================================================
 
-    public function WPComponent__register__plugins(){
+    public function wpcomponent_register_plugins(){
 		// register javascript 
 		$scripts = array();
 
 		$scripts[] = array(
 			'handle'	=> 'switchery',
-			'src'		=> WPC_URL . '/front/js/switchery.js',
+			'src'		=> WPCOMPONENT_URL . '/front/js/switchery.js',
 			'deps'		=> array('jquery')
 		);
 
 		$scripts[] = array(
 			'handle'	=> 'wpcomponent-js',
-			'src'		=> WPC_URL . '/front/js/wpcomponent.js',
+			'src'		=> WPCOMPONENT_URL . '/front/js/wpcomponent.js',
 			'deps'		=> array('jquery','switchery')
 		);
 
 		$scripts[] = array(
 			'handle'	=> 'wpc-settings',
-			'src'		=> WPC_URL . '/front/js/settings.js',
+			'src'		=> WPCOMPONENT_URL . '/front/js/settings.js',
 			'deps'		=> array('jquery','switchery')
 		);
 
@@ -223,7 +209,7 @@ class WPComponent__kickstarter
 		}
     }
 
-    public function WPComponent__register__twitter(){
+    public function wpcomponent_register_twitter(){
     		?>
 		<script>window.twttr = (function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0],
@@ -248,13 +234,13 @@ class WPComponent__kickstarter
     // Register CSS Styles
     // ============================================================
 
-    public function WPComponent__register__styles(){
+    public function wpcomponent_register_styles(){
 		// register styles
 		$styles = array();
 		
 		$styles[] = array(
 			'handle'	=> 'wpcomponent-css',
-			'src'		=> WPC_URL . '/front/css/wpcomponent.css'
+			'src'		=> WPCOMPONENT_URL . '/front/css/wpcomponent.css'
 		);
 		
 		foreach( $styles as $style )
@@ -270,7 +256,7 @@ function wpcomponent()
 	
 	if( !isset($wpcomponent) )
 	{
-		$wpcomponent = new WPComponent__kickstarter();
+		$wpcomponent = new wpcomponent_kickstarter();
 	}
 	
 	return $wpcomponent;
@@ -281,7 +267,7 @@ function wpcomponent()
 wpcomponent();
 
 // hook qui appelle la fonction à l'activation du theme
-register_activation_hook( __FILE__, array( 'WPComponent__kickstarter' , 'WPComponent__activation' ) );
+register_activation_hook( __FILE__, array( 'wpcomponent_kickstarter' , 'wpcomponent_activation' ) );
 
 
 endif; // class_exists check

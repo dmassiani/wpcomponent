@@ -6,7 +6,7 @@
 //
 // ******************************************************
 
-class WPComponent_structure extends WPComponent_kickstarter
+class wpcomponent_structure extends wpcomponent_kickstarter
 {
 
 	public $folder;
@@ -22,8 +22,8 @@ class WPComponent_structure extends WPComponent_kickstarter
 
 	public function __construct(){
 
-		$this->themeFolder = get_stylesheet_directory() . '/' . WPC_FOLDER;
-		$this->pluginFolder = WPC_DEFAULT_TEMPLATE;
+		$this->themeFolder = get_stylesheet_directory() . '/' . WPCOMPONENT_FOLDER;
+		$this->pluginFolder = WPCOMPONENT_DEFAULT_TEMPLATE;
 
 		if( is_dir( $this->themeFolder ) ){
 			$this->files = scandir( $this->themeFolder );
@@ -33,7 +33,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 			$this->folder_exist = false;
 		}
 
-		$this->utility = new WPComponent_utility();
+		$this->utility = new wpcomponent_utility();
 		$this->currentFolder = $this->themeFolder;
 		
 	}
@@ -75,7 +75,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 	// Cette fonction scanne un dossier en particulier et retourne les json des contents
 	// ---------------------------------------------------------------
 
-	public function WPComponent_scan_folder($content, $folder){
+	public function wpcomponent_scan_folder($content, $folder){
 
 		$filesFounded = [];
 
@@ -126,7 +126,7 @@ class WPComponent_structure extends WPComponent_kickstarter
     // Load PLUGIN Templates
     // ============================================================
 
-	public function WPComponent_register_Plugin_folder(){
+	public function wpcomponent_register_Plugin_folder(){
 
 
 		// on prend on dossier et on le transforme en tableau de contenance dossier -> fichier
@@ -142,7 +142,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 					// et on les transforme en json contenant les informations du fichier
 					// json utilisable ensuite pour générer les metabox de content
 					$this->currentFolder = $this->pluginFolder;
-					$pluginFolder[$key] = $this->WPComponent_scan_folder( $value, $key );
+					$pluginFolder[$key] = $this->wpcomponent_scan_folder( $value, $key );
 
 				}
 
@@ -159,7 +159,7 @@ class WPComponent_structure extends WPComponent_kickstarter
     // Load THEMES Templates
     // ============================================================
 
-	public function WPComponent_register_Theme_folder(){
+	public function wpcomponent_register_Theme_folder(){
 
     	if( $this->folder_exist === false ){
     		return false;
@@ -178,7 +178,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 				// json utilisable ensuite pour générer les metabox de content
 
 				$this->currentFolder = $this->themeFolder;
-				$themesFolder[$key] = $this->WPComponent_scan_folder( $value, $key );
+				$themesFolder[$key] = $this->wpcomponent_scan_folder( $value, $key );
 
 			}
 
@@ -187,7 +187,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 		return $themesFolder;	
 	}
 
-    public function WPComponent_register_templates(){
+    public function wpcomponent_register_templates(){
 
 		
 		// on prend on dossier et on le transforme en tableau de contenance dossier -> fichier
@@ -201,7 +201,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 				// et on les transforme en json contenant les informations du fichier
 				// json utilisable ensuite pour générer les metabox de content
 
-				$themesFolder[$key] = $this->WPComponent_scan_folder( $value, $key );
+				$themesFolder[$key] = $this->wpcomponent_scan_folder( $value, $key );
 
 			}
 
@@ -211,9 +211,9 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_realTemplates(){
+    public function wpcomponent_realTemplates(){
 
-    	$templates = $this->WPComponent_register_templates();
+    	$templates = $this->wpcomponent_register_templates();
 
         $elements = [];
 
@@ -232,7 +232,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_get_template_structure( $name ){
+    public function wpcomponent_get_template_structure( $name ){
 
     	if( $this->folder_exist === false ){
     		return false;
@@ -259,7 +259,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 		return $elements;
     }
 
-    public function WPComponent_get_fileStructure( $type, $folder, $file ){
+    public function wpcomponent_get_fileStructure( $type, $folder, $file ){
 
 
     	if( $type === 'theme' ){
@@ -289,7 +289,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 		return $element;
     }
 
-    public function WPComponent_getFileStructure( $type, $folder, $file ){
+    public function wpcomponent_getFileStructure( $type, $folder, $file ){
 
     	// type = theme ou plugin : désigne si le template est situé dans le theme ou le plugin
     	// folder = dossier dans lequel est le template. Ex : plugin / folder / file ou theme / folder / file
@@ -329,7 +329,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_getFileSlugs( $type, $folder, $file ){
+    public function wpcomponent_getFileSlugs( $type, $folder, $file ){
 
     	// return array of slugs
 
@@ -365,7 +365,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 		return $structure;
     }
 
-    public function WPComponent_getSelectOption( $type, $folder, $file, $slug ){
+    public function wpcomponent_getSelectOption( $type, $folder, $file, $slug ){
 
 
     	if( $type === 'theme' ){
@@ -400,7 +400,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_getFileNames( $type, $folder, $file ){
+    public function wpcomponent_getFileNames( $type, $folder, $file ){
 
     	// return array of slugs
 
@@ -436,7 +436,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 		return $structure;
     }
 
-    public function WPComponent_getFileTemplate( $type, $folder, $file ){
+    public function wpcomponent_getFileTemplate( $type, $folder, $file ){
 
     	// return array of slugs
 
@@ -458,7 +458,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_getNameFileSlug( $type, $folder, $file, $slug ){
+    public function wpcomponent_getNameFileSlug( $type, $folder, $file, $slug ){
 
     	// return array of slugs
 
@@ -490,7 +490,7 @@ class WPComponent_structure extends WPComponent_kickstarter
 
     }
 
-    public function WPComponent_slugType( $type, $folder, $file, $slug ){
+    public function wpcomponent_slugType( $type, $folder, $file, $slug ){
 
 
     	if( $type === 'theme' ){

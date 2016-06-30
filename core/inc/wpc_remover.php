@@ -6,7 +6,7 @@
 //
 // ******************************************************
 
-class WPComponent_remover
+class wpcomponent_remover
 {
 
 
@@ -14,7 +14,7 @@ class WPComponent_remover
     public $parent;
     public $meta_elements;
 
-	public function WPComponent_remove_elements() {
+	public function wpcomponent_remove_elements() {
 
 		global $wpdb;
 
@@ -49,7 +49,7 @@ class WPComponent_remover
 			}
 
 			$this->meta_elements;
-			$this->WPComponent_update_parentMeta();
+			$this->wpcomponent_update_parentMeta();
 
 			echo 'done';
 
@@ -57,11 +57,11 @@ class WPComponent_remover
 
 	}
 
-	public function WPComponent_update_parentMeta(){
+	public function wpcomponent_update_parentMeta(){
 
 		$post_id = $this->parent;
 		// on retrouve la meta pour le post
-		$metas = get_post_meta( $post_id, '_wpc_structure', true );
+		$metas = get_post_meta( $post_id, '_wpcomponent_structure', true );
 		$elements = explode( ',', trim(urldecode($this->elements)) );
 
 		// pour chaque metabox
@@ -97,7 +97,7 @@ class WPComponent_remover
 		// pour chaque meta on reinitialise le code metabox
 
 		// on update les metas
-		update_post_meta( $post_id, '_wpc_structure', $metas );
+		update_post_meta( $post_id, '_wpcomponent_structure', $metas );
 
 		echo 'done';
 	}

@@ -8,7 +8,7 @@
 // ******************************************************
 
 
-class WPComponent_admin
+class wpcomponent_admin
 {
 
 	protected $option_name = 'wpcomponent';
@@ -33,8 +33,6 @@ class WPComponent_admin
 			// plugins_url( '../front/image/wpcomponent-icon-16.png' , dirname(_FILE_) ),
 			// 89
 		);
-
-		// add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 
 		// prepare settings fields
 

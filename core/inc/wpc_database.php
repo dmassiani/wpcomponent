@@ -1,9 +1,9 @@
 <?php
-class WPComponent_database
+class wpcomponent_database
 {
 
 
-	public function total_wpc_content( $post_ID ){
+	public function total_wpcomponent_content( $post_ID ){
 
 		$args = array(
 			'post_type'  	=> 'WPC_content'

@@ -6,23 +6,23 @@
 //
 // ******************************************************
 
-class WPComponent_ajax
+class wpcomponent_ajax
 {
 
 
     public function __construct(){
 
-        add_action("wp_ajax_WPComponent_getNewBox", array( $this, "WPComponent_getNewBox") );
-        add_action("wp_ajax_nopriv_WPComponent_getNewBox", array( $this, "WPComponent_getNewBox") );
+        add_action("wp_ajax_wpcomponent_getNewBox", array( $this, "wpcomponent_getNewBox") );
+        add_action("wp_ajax_nopriv_wpcomponent_getNewBox", array( $this, "wpcomponent_getNewBox") );
 
-        add_action("wp_ajax_WPComponent_deleteElements", array( $this, "WPComponent_deleteElements") );
-        add_action("wp_ajax_nopriv_WPComponent_deleteElements", array( $this, "WPComponent_deleteElements") );
+        add_action("wp_ajax_wpcomponent_deleteElements", array( $this, "wpcomponent_deleteElements") );
+        add_action("wp_ajax_nopriv_wpcomponent_deleteElements", array( $this, "wpcomponent_deleteElements") );
 
-        add_action("wp_ajax_WPComponent_getPosts_byType", array( $this, "WPComponent_getPosts_byType") );
-        add_action("wp_ajax_nopriv_WPComponent_getPosts_byType", array( $this, "WPComponent_getPosts_byType") );
+        add_action("wp_ajax_wpcomponent_getPosts_byType", array( $this, "wpcomponent_getPosts_byType") );
+        add_action("wp_ajax_nopriv_wpcomponent_getPosts_byType", array( $this, "wpcomponent_getPosts_byType") );
 
-        add_action("wp_ajax_WPComponent_checkup", array( $this, "WPComponent_checkup") );
-        add_action("wp_ajax_nopriv_WPComponent_checkup", array( $this, "WPComponent_checkup") );
+        add_action("wp_ajax_wpcomponent_checkup", array( $this, "wpcomponent_checkup") );
+        add_action("wp_ajax_nopriv_wpcomponent_checkup", array( $this, "wpcomponent_checkup") );
 
     }
 
@@ -31,15 +31,15 @@ class WPComponent_ajax
     // fonction qui retourne le nombre de post mch_content
     // ===================================================================
 
-    public function WPComponent_getTotalStoryPost(){
+    public function wpcomponent_getTotalStoryPost(){
 
-        $db = new WPComponent_database();
+        $db = new wpcomponent_database();
         echo $db->total_wpc_content();
         die();
 
     }
 
-    public function WPComponent_getPosts_byType(){
+    public function wpcomponent_getPosts_byType(){
 
 
         $type = $_POST['type'];
@@ -67,15 +67,15 @@ class WPComponent_ajax
     // fonction qui retourne l'editeur wordpress !
     // ===================================================================
 
-    public function WPComponent_getNewBox(){
+    public function wpcomponent_getNewBox(){
 
-        $editeur = new WPComponent_editors();
+        $editeur = new wpcomponent_editors();
 
         $editeur->folder_type = $_POST['type'];
         $editeur->folder = $_POST['folder'];
         $editeur->file = $_POST['file'];
         $editeur->ajax = true;
-        $editeur->n__metabox = $_POST['n_metabox'];
+        $editeur->n_metabox = $_POST['n_metabox'];
 
         $editeur->getNewBox();
 
@@ -87,14 +87,14 @@ class WPComponent_ajax
     // delete all element of metabox
     // ===================================================================
 
-    public function WPComponent_deleteElements(){
+    public function wpcomponent_deleteElements(){
 
-        $remover = new WPComponent_remover();
+        $remover = new wpcomponent_remover();
 
         $remover->elements = $_POST['elements'];
         $remover->parent = $_POST['parent'];
 
-        $remover->WPComponent_remove_elements();
+        $remover->wpcomponent_remove_elements();
 
         die();
 
@@ -104,9 +104,9 @@ class WPComponent_ajax
     // send checkup
     // ===================================================================
 
-    public function WPComponent_checkup(){
+    public function wpcomponent_checkup(){
 
-        $checkup = new WPComponent_checkup();
+        $checkup = new wpcomponent_checkup();
         $checkup->init();
 
         die();
