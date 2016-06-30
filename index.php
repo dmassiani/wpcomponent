@@ -166,7 +166,7 @@ class wpcomponent_kickstarter
     }
 
     static function wpcomponent_activation(){
-
+		update_option( 'wpcomponent_setting_enable_inside_the_content', 'true' );
     }
 
     public function wpcomponent_afterThemeActivation(){

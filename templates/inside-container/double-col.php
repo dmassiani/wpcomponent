@@ -8,9 +8,6 @@ Description: Section with 2 titles, 2 contents and 2 illustrations
 ---------------------------------------------------------------------
 */
 
-
-// load css flexbox grid bootstrap compatible
-// wp_enqueue_style( 'flexboxgrid', '//cdn.jsdelivr.net/flexboxgrid/6.1.1/flexboxgrid.min.css' );
 ?>
 <article class="hentry">
 
