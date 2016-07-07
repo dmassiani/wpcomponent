@@ -288,7 +288,7 @@ class wpcomponent_admin
 				<div class="wpc_admin--card">
 					<h2><?php _e('Using the_content()', 'wpcomponent') ?></h2>
 					<h4>
-						<?php _e('Using the_wpcomponent() inside the_content()', 'wpcomponent') ?>
+						<?php _e('Using the_wpc() inside the_content()', 'wpcomponent') ?>
 						<?php $checked = ( $options['wpcomponent_setting_enable_inside_the_content'] === 'true' ) ? 'checked' : ''; ?>
 						<input type="checkbox" name="wpcomponent_setting_enable_inside_the_content" value="<?php echo $options['wpcomponent_setting_enable_inside_the_content']; ?>" class="js-switch-settings" <?=$checked?> />
 					</h4>
