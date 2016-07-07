@@ -131,8 +131,6 @@
 		$('#wpc_selector .inside ol').hide();
 		$('#wpc_selector .inside ol#' + $(this).val()).show();
 
-		console.log('test');
-
 	});
 
 
@@ -374,9 +372,25 @@
 			});
 
 		}else{
-			// buttonRemove.closest('.wpc_container').remove();
-			buttonRemove.closest('.wpc_remove_element').find('.confirm').hide();
-			buttonRemove.closest('.wpc_remove_element').find('.remover a').show();
+			if( buttonRemove.closest('.wpc_container').hasClass('wpc_container-first') ) isFirst = true;
+
+			buttonRemove.closest('.wpc_container').remove();
+			
+			/** 
+			 * Si c'est le premier on hérite la class first sur le suivant
+			 *
+			 */
+			jQuery('#post-body-content')
+				.find('.wpc_container')
+				.first()
+				.addClass('wpc_container-first');
+
+			// on supprimer aussi tout les editeurs tiny mce
+			$.each( buttonRemove.closest('.wpc_container').find('input[name="wpc_post_[]"]'), function(e){
+				tinymce.EditorManager.execCommand('mceRemoveEditor',true, $(this).val() );
+			});
+
+			wpc_getElements();
 		}
 
 
