@@ -40,7 +40,7 @@ function get_wpcomponent( $slug = false, $size = false ) {
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -108,7 +108,7 @@ function get_wpc_illustration( $slug = false, $echo = false, $size = false ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -158,7 +158,7 @@ function get_wpc_chapter( $slug = false, $echo = false ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -201,7 +201,7 @@ function get_wpc_title( $slug = false, $echo = false ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -241,7 +241,7 @@ function get_wpc_option( $slug = false, $echo = false ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -279,7 +279,7 @@ function get_wpc_link( $slug = false, $echo = false ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	if( $slug === false ) return;
@@ -306,7 +306,7 @@ function get_wpc_link( $slug = false, $echo = false ){
 
 }
 
-function define_stories(){
+function define_wpc_stories(){
 
 	global $post;
 	global $wpc_stories;
@@ -368,7 +368,7 @@ function get_wpc() {
 	global $wpc_current_wpc;
 	$wpcomponent_content = '';
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 
 	foreach ($wpc_stories as $key => $wpc):
@@ -403,7 +403,7 @@ function get_wpcomponent_template( $wpc_name, $folder, $folder_type ){
 	global $wpc_stories;
 	global $wpc_current_wpc;
 
-	if( empty( $wpc_stories ) ) define_stories();
+	if( empty( $wpc_stories ) ) define_wpc_stories();
 	if( empty( $wpc_stories ) ) return;
 	if( empty( $wpc_name ) ) return;
 

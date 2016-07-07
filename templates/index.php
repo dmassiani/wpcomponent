@@ -153,7 +153,7 @@ class wpcomponent_kickstarter
     	 * Load deprecated functions
     	 * this is removed in next version
     	 */
-		include_once plugin_dir_path(__FILE__). '/core/deprecated/wpc_content.php';
+		// include_once plugin_dir_path(__FILE__). '/core/deprecated/wpc_content.php';
 		
 		/**
 		 * Load functions
