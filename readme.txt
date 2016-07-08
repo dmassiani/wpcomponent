@@ -32,10 +32,8 @@ e.g.
 
 1. Upload `wpcomponent` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. WPComponent using the_content() for extract components.
-4. You can use `<?php the_wpc(); ?>` in your templates (disable the_content() extract in settings option)
-5. Create Component in "wpcomponent" folder in your theme
-6. Go to an article, choose component in your admin sidebar, editing your first component, save (or update) and let's go!
+3. Edit an article or a page and choose a component in your admin sidebar
+4. Editing your first component, save (or update) and let's go!
 
 == Frequently Asked Questions ==
 
