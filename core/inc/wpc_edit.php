@@ -66,6 +66,7 @@ class wpcomponent_edit
 				$editeur->folder_type 	= $metabox['folder_type'];
 				$editeur->folder 		= $metabox['folder'];
 				$editeur->file 			= $metabox['file'];
+				$editeur->disable 		= $metabox['disable'];
 				$editeur->options 		= null;
 
 				// --------------------------------------------------
