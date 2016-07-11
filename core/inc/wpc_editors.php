@@ -487,7 +487,7 @@ class wpcomponent_editors
 	    	<div class="wpc_element-input wp-core-ui wp-title-wrap">
 	    		<div class="inner">
 
-	    				<input type="checkbox" name="wpcomponent_disable_[]" class="js-switch" <?php echo $disable ?>/>
+	    				<input type="checkbox" name="wpcomponent_disable_<?php echo $this->metabox_id ?>" class="js-switch" <?php echo $disable ?>/>
 
 				</div>
 			</div>

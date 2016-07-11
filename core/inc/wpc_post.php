@@ -39,9 +39,9 @@ class wpcomponent_post
 				$wpc_images 		= $_POST['wpcomponent_image_id'];
 				$wpc_slug_ID 		= $_POST['wpcomponent_slug_ID'];
 
-				if( !empty( $_POST['wpcomponent_disable_'] ) ):
-					$wpc_disables = $_POST['wpcomponent_disable_'];
-				endif;
+				// if( !empty( $_POST['wpcomponent_disable_'] ) ):
+				// 	$wpc_disables = $_POST['wpcomponent_disable_'];
+				// endif;
 
 				if( !empty( $_POST['wpcomponent_title_'] ) ):
 					$wpc_titles = $_POST['wpcomponent_title_'];
@@ -149,6 +149,7 @@ class wpcomponent_post
 							$folder 	= $wpc_folder[ $key_meta ];
 							$file 		= $wpc_files[ $key_meta ];
 							$template 	= $wpc_templates[ $key_meta ];
+							$disable = 'off';
 							unset($meta_content);
 
 							// on récupère la structure de la metabox grace au nom du fichier
@@ -274,10 +275,8 @@ class wpcomponent_post
 							 *
 							 *
 							 */
-							if( !empty( $_POST['wpcomponent_disable_'] ) && !empty($wpc_disables[$key_meta]) ){
-								$disable = $wpc_disables[$key_meta];
-							}else{
-								$disable = 'off';
+							if( $_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta]] === 'on' ){
+								$disable = 'on';
 							}
 
 
