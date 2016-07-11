@@ -239,11 +239,22 @@ class wpcomponent_post
 
 								}else{
 
+
 									$slug_id = $wpc_newpost['slug_ID'];
 
 									$content = $wpc_newpost['post_content'];
 
-									$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
+									/**
+									 * this is an update BUT
+									 * I can add many options in template, I need to make this post meta
+									 *
+									 */
+									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id=$slug_id");
+									if( $meta == 0 ){
+										$slug_id = add_post_meta( $post_id, $element->slug, $wpc_newpost['post_content'] );
+									}else{
+										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
+									}
 
 								}
 

@@ -2,7 +2,7 @@
 Contributors: david massiani
 Tags: template, components, component, custom fields, macro-template, landing-page, template, theme builder, composer, visual composer
 Requires at least: 4.1
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: 4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -56,6 +56,9 @@ More feature in futur.
 No upgrade
 
 == Changelog ==
+
+= 2.1.1 =
+* Features : add disable component option
 
 = 2.1 =
 * change strategy about data : post to meta

@@ -141,6 +141,7 @@ class wpcomponent_edit
 					if( isset( $contentStructure[ $slug ] ) ){
 
 						// $post = get_post( $contentStructure[ $slug ]['ID'] );
+
 						$data = get_metadata_by_mid ( 'post' , $contentStructure[ $slug ]['slug_ID'] );
 
 						// $editeur->ID 			= $post->ID;

@@ -6,7 +6,7 @@
 Plugin Name: WordPress Component
 Plugin URI: http://wpcomponent.com/
 Description: WPComponent enable component for web artist.
-Version: 2.1
+Version: 2.1.1
 Author: David Massiani
 Author URI: http://davidmassiani.com
 License: GPLv2 or later
@@ -15,7 +15,7 @@ Text Domain: wpcomponent
 
 
 // Folder name
-define ( 'WPCOMPONENT_VERSION', '2.1' );
+define ( 'WPCOMPONENT_VERSION', '2.1.1' );
 define ( 'WPCOMPONENT_FOLDER',  'wpcomponent' );
 
 define ( 'WPCOMPONENT_URL', plugins_url('', __FILE__) );
