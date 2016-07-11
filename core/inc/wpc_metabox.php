@@ -4,7 +4,7 @@ class wpcomponent_metabox
 
     public function __construct()
     {
-        load_textdomain('wpcomponent', WPCOMPONENT_DIR . 'lang/wpc-' . get_locale() . '.mo');
+        load_textdomain('wpcomponent', WPCOMPONENT_DIR . 'lang/wpcomponent-' . get_locale() . '.mo');
         add_action( 'add_meta_boxes', array($this, 'wpcomponent_addMetaBox_Sidebar') );
     }
 
