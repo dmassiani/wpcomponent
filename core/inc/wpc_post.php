@@ -275,7 +275,8 @@ class wpcomponent_post
 							 *
 							 *
 							 */
-							if( $_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta]] === 'on' ){
+							if( isset($_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta] ] ) 
+								&& $_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta] ] === 'on' ){
 								$disable = 'on';
 							}
 
