@@ -320,8 +320,8 @@ function define_wpc_stories(){
 	 *
 	 *
 	 */
-
 	$metas = get_post_meta( $post->ID, '_wpc_content', true );
+
 	if ( empty( $metas ) ):
 		$metas = get_post_meta( $post->ID, '_wpcomponent_structure', true );
 	endif;
@@ -335,14 +335,17 @@ function define_wpc_stories(){
 			$file	  		= $metas[ $key ]['file'];
 			$folder_type	= $metas[ $key ]['folder_type'];
 			$folder	  		= $metas[ $key ]['folder'];
+			$disable 		= $metas[ $key ]['disable'];
 			$contents 		= $metas[ $key ]['content'];
 
-			$wpc_stories[] = array(
-				'folder_type' 		=> $folder_type,
-				'folder' 			=> $folder,
-				'file' 				=> $file,
-				'contents' 			=> $contents
-			);
+			if( $disable === 'off' ){				
+				$wpc_stories[] = array(
+					'folder_type' 		=> $folder_type,
+					'folder' 			=> $folder,
+					'file' 				=> $file,
+					'contents' 			=> $contents
+				);
+			}
 
 		endforeach;
 

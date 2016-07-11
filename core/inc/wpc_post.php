@@ -38,7 +38,10 @@ class wpcomponent_post
 				$wpc_slugs 			= $_POST['wpcomponent_slug_'];
 				$wpc_images 		= $_POST['wpcomponent_image_id'];
 				$wpc_slug_ID 		= $_POST['wpcomponent_slug_ID'];
-				
+
+				if( !empty( $_POST['wpcomponent_disable_'] ) ):
+					$wpc_disables = $_POST['wpcomponent_disable_'];
+				endif;
 
 				if( !empty( $_POST['wpcomponent_title_'] ) ):
 					$wpc_titles = $_POST['wpcomponent_title_'];
@@ -182,7 +185,6 @@ class wpcomponent_post
 
 								}
 
-
 								// gestion du contenu en fonction du type
 								switch ( $element->type ) {
 									case 'image':
@@ -237,11 +239,22 @@ class wpcomponent_post
 
 								}else{
 
+
 									$slug_id = $wpc_newpost['slug_ID'];
 
 									$content = $wpc_newpost['post_content'];
 
-									$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
+									/**
+									 * this is an update BUT
+									 * I can add many options in template, I need to make this post meta
+									 *
+									 */
+									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id=$slug_id");
+									if( $meta == 0 ){
+										$slug_id = add_post_meta( $post_id, $element->slug, $wpc_newpost['post_content'] );
+									}else{
+										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
+									}
 
 								}
 
@@ -256,6 +269,17 @@ class wpcomponent_post
 
 							endforeach;
 
+							/**
+							 * Disable option
+							 *
+							 *
+							 */
+							if( !empty( $_POST['wpcomponent_disable_'] ) && !empty($wpc_disables[$key_meta]) ){
+								$disable = $wpc_disables[$key_meta];
+							}else{
+								$disable = 'off';
+							}
+
 
 							$metas[] = array( 
 								'file' 			=> $file, 
@@ -263,7 +287,8 @@ class wpcomponent_post
 								'folder' 		=> $folder, 
 								'template' 		=> $template, 
 								'container' 	=> $metabox, 
-								'content' 		=> $meta_content
+								'content' 		=> $meta_content,
+								'disable'		=> $disable
 							);
 
 

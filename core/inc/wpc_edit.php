@@ -66,6 +66,7 @@ class wpcomponent_edit
 				$editeur->folder_type 	= $metabox['folder_type'];
 				$editeur->folder 		= $metabox['folder'];
 				$editeur->file 			= $metabox['file'];
+				$editeur->disable 		= $metabox['disable'];
 				$editeur->options 		= null;
 
 				// --------------------------------------------------
@@ -140,6 +141,7 @@ class wpcomponent_edit
 					if( isset( $contentStructure[ $slug ] ) ){
 
 						// $post = get_post( $contentStructure[ $slug ]['ID'] );
+
 						$data = get_metadata_by_mid ( 'post' , $contentStructure[ $slug ]['slug_ID'] );
 
 						// $editeur->ID 			= $post->ID;

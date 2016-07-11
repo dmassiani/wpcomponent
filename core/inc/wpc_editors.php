@@ -36,6 +36,7 @@ class wpcomponent_editors
     public $elementsRemove;
     public $postID;
     public $options;
+    public $disable;
 
 
 	public function getNewBox(){
@@ -144,6 +145,17 @@ class wpcomponent_editors
 							<h3 class="hndle">
 								<span>
 									<i class="icon -dragger"></i> <?=ucfirst($this->folder)?> : <strong><?=$this->template?></strong>
+									<?php 
+									/**
+									 * set visually disable
+									 *
+									 */
+									if( $this->disable === 'on' ){
+									?>
+									[ <?php _e('disable', 'wpcomponent') ?> ]
+									<?php
+									}
+									?>
 								</span>
 							</h3>
 						</header>
@@ -166,7 +178,11 @@ class wpcomponent_editors
 						<!--  End inside -->
 
 						<div class="wpc_settings">
-							<?php $this->getOptions(); ?>
+							<?php 
+								// we adding disable option 
+								$this->disableComponent(); 
+								$this->getOptions(); 
+							?>
 						</div>
 
 					</div> 
@@ -187,13 +203,13 @@ class wpcomponent_editors
 						<div class="wpc_sidebar-actions">
 							
 							<?php
-							if( $this->hasOptions() ){
+							// if( $this->hasOptions() ){
 							?>
 							<a href="#" class="wpc_settings-handler">
 								<i class="icon -settings"></i>
 							</a>
 							<?php
-							}
+							// }
 							?>
 
 		                	<!-- Metabox Remover -->
@@ -446,6 +462,43 @@ class wpcomponent_editors
  
     }
 
+
+	/* ---------------------------------------------------
+
+		Disable component
+		
+	/* --------------------------------------------------- */
+
+    public function disableComponent()
+    {
+		ob_start();
+		if( $this->disable === 'on' ){
+			$disable = 'checked';
+		}else{
+			$disable = '';
+		}
+		?>
+		<div class="wpc_element">
+
+			<h2>
+				<i class="icon -title"></i> <?php _e('Disable component', 'wpcomponent') ?>
+			</h2>
+
+	    	<div class="wpc_element-input wp-core-ui wp-title-wrap">
+	    		<div class="inner">
+
+	    				<input type="checkbox" name="wpcomponent_disable_[]" class="js-switch" <?php echo $disable ?>/>
+
+				</div>
+			</div>
+		</div>
+		<?php
+        $this->options.= ob_get_contents();
+		
+		ob_get_clean();
+ 
+ 
+    }
 
 	/* ---------------------------------------------------
 
