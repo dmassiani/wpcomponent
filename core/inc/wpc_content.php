@@ -27,14 +27,15 @@ add_filter( 'the_content', 'the_wpcomponent_inside_the_content', 6 );
 
 /**
  * extract component
- *
- *
+ * $slug is string
+ * $size for image
+ * $echo is for when we need to return image or src
  */
-function the_wpcomponent( $slug = false, $size = false ) {
-	echo get_wpcomponent( $slug, $size );
+function the_wpcomponent( $slug = false, $size = false, $echo = false ) {
+	echo get_wpcomponent( $slug, $size, $echo );
 }
 
-function get_wpcomponent( $slug = false, $size = false ) {
+function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 
 	global $post;
 	global $wpc_stories;
@@ -58,7 +59,7 @@ function get_wpcomponent( $slug = false, $size = false ) {
 	        switch( $type ) {
 
 	        	case 'image' :
-	        		$wpcomponent_content = get_wpc_illustration( $slug, $size );
+	        		$wpcomponent_content = get_wpc_illustration( $slug, $size, $echo );
 	        		break;
 
 	        	case 'editor' :
@@ -102,7 +103,7 @@ function get_wpcomponent( $slug = false, $size = false ) {
  *
  *
  */
-function get_wpc_illustration( $slug = false, $echo = false, $size = false ){
+function get_wpc_illustration( $slug = false, $size = false, $echo = false ){
 
 	global $post;
 	global $wpc_stories;
@@ -133,14 +134,14 @@ function get_wpc_illustration( $slug = false, $echo = false, $size = false ){
 
 		if( $echo ){
 			
-			return wp_get_attachment_image( $the_chapter->meta_value, $size );
-
-		}else{
 			$image = wp_get_attachment_image_src( $the_chapter->meta_value, $size );
 
 			if( $image ) {
 			    return $image[0];
 			}
+
+		}else{
+			return wp_get_attachment_image( $the_chapter->meta_value, $size );
 		}
 
 	endif;

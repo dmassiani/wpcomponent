@@ -149,12 +149,6 @@ class wpcomponent_kickstarter
 		include_once plugin_dir_path(__FILE__). '/core/inc/wpc_checkup.php';
     }
     public function wpcomponent_include_front_class(){
-    	/**
-    	 * Load deprecated functions
-    	 * this is removed in next version
-    	 */
-		// include_once plugin_dir_path(__FILE__). '/core/deprecated/wpc_content.php';
-		
 		/**
 		 * Load functions
 		 *

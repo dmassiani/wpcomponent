@@ -20,28 +20,24 @@ class wpcomponent_post
 	public function wpcomponent_save( $post_id ) {
 
 
-			if( !empty( $_POST['wpcomponent_post_'] )
-			&& !empty( $_POST['wpcomponent_template_'] )
-			&& !empty( $_POST['wpcomponent_type_'] )
-			&& !empty( $_POST['wpcomponent_folder_type_'] )
-			&& !empty( $_POST['wpcomponent_folder_'] )
-			&& !empty( $_POST['wpcomponent_slug_'] )
-			&& !empty( $_POST['metabox_id'] )){
+			if( !empty( $_POST['wpcomponent_post_'] ) && is_array($_POST['wpcomponent_post_'])
+			&& !empty( $_POST['wpcomponent_template_'] ) && is_array($_POST['wpcomponent_template_'])
+			&& !empty( $_POST['wpcomponent_type_'] ) && is_array($_POST['wpcomponent_type_'])
+			&& !empty( $_POST['wpcomponent_folder_type_'] ) && is_array($_POST['wpcomponent_folder_type_'])
+			&& !empty( $_POST['wpcomponent_folder_'] ) && is_array($_POST['wpcomponent_folder_'])
+			&& !empty( $_POST['wpcomponent_slug_'] ) && is_array($_POST['wpcomponent_slug_'])
+			&& !empty( $_POST['metabox_id'] ) && is_array($_POST['metabox_id'])){
 
-				$wpc_metabox 		= $_POST['metabox_id'];
-				$wpc_posts 			= $_POST['wpcomponent_post_'];
-				$wpc_templates 		= $_POST['wpcomponent_template_'];
-				$wpc_folder_types	= $_POST['wpcomponent_folder_type_'];
-				$wpc_folder 		= $_POST['wpcomponent_folder_'];
-				$wpc_types 			= $_POST['wpcomponent_type_'];
-				$wpc_files 			= $_POST['wpcomponent_file_'];
-				$wpc_slugs 			= $_POST['wpcomponent_slug_'];
-				$wpc_images 		= $_POST['wpcomponent_image_id'];
-				$wpc_slug_ID 		= $_POST['wpcomponent_slug_ID'];
-
-				// if( !empty( $_POST['wpcomponent_disable_'] ) ):
-				// 	$wpc_disables = $_POST['wpcomponent_disable_'];
-				// endif;
+				$wpc_metabox 		= array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['metabox_id']);
+				$wpc_posts 			= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_post_']);
+				$wpc_templates 		= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_template_']);
+				$wpc_folder_types	= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_folder_type_']);
+				$wpc_folder 		= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_folder_']);
+				$wpc_types 			= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_type_']);
+				$wpc_files 			= array_map( array( "wpcomponent_utility", "sanitizeArrayFilesName" ), $_POST['wpcomponent_file_']);
+				$wpc_slugs 			= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_slug_']);
+				$wpc_images 		= array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_image_id']);
+				$wpc_slug_ID 		= array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_slug_ID']);
 
 				if( !empty( $_POST['wpcomponent_title_'] ) ):
 					$wpc_titles = $_POST['wpcomponent_title_'];

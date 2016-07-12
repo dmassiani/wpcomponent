@@ -48,4 +48,16 @@ class wpcomponent_utility
 		return is_string($string) && is_object(json_decode($string)) ? true : false;
 	}	
 
+	public static function sanitizeArrayInt($value) {
+		return sanitize_key($value);
+	}
+
+	public static function sanitizeArrayTextFields($value) {
+		return sanitize_text_field($value);
+	}
+
+	public static function sanitizeArrayFilesName($value) {
+		return sanitize_file_name($value);
+	}
+
 }
