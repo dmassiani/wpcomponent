@@ -136,7 +136,6 @@ class wpcomponent_post
 					$i_optionswitch 	= 0;
 					$i_link 			= 0;
 					$i_image 			= 0;
-					$i_editor			= 0;
 
 					$metas = [];
 
@@ -151,6 +150,8 @@ class wpcomponent_post
 							$template 	= $wpc_templates[ $key_meta ];
 							$disable = 'off';
 							unset($meta_content);
+							$i_editor			= 0;
+
 
 							// on récupère la structure de la metabox grace au nom du fichier
 							$metabox_structure = $wpc_structure->wpcomponent_get_fileStructure( $folder_type, $folder, $file );
@@ -191,7 +192,8 @@ class wpcomponent_post
 										break;
 
 									case 'editor':
-										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $i_editor ] ] );
+										$everyOptionTraited = $i_option + $i_optionnumber + $i_optionswitch + $i_optionselect;
+										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $key_element - $everyOptionTraited ] ] );
 										$i_editor++;
 										break;
 
