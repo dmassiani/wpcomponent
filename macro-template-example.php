@@ -10,6 +10,7 @@ Description: Section with 2 titles, 2 contents and 2 illustrations
 {"type": "editor", "name": "Right content", "slug": "right_content"}
 {"type": "image", "name": "Right illustration", "slug": "right_illustration"}
 {"type": "link", "name": "Page", "slug": "page"}
+{"type": "number", "name": "juste un chiffre", "slug": "myNumber"}
 {"type": "option", "name": "Option couleur", "slug": "color"}
 {"type": "option-number", "name": "Option couleur en chiffre", "slug": "colorNumber"}
 {"type": "option-switch", "name": "Option couleur en switch", "slug": "colorSwitch"}

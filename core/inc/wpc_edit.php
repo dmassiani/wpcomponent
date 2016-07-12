@@ -113,6 +113,7 @@ class wpcomponent_edit
 					Pour chaque slug du fichier on va chercher la data correspondante.
 				*/
 				// --------------------------------------------------
+
 				foreach( $fileStructure as $keyS => $slug ):
 
 
@@ -133,14 +134,18 @@ class wpcomponent_edit
 					$dataI = false;
 					$currentSlug = NULL;
 
-
-					// $editeur->ID 			= '';
+					/**
+					 * Reset des datas
+					 *
+					 */
 					$editeur->content 		= '';
+					$editeur->slug_ID = '';
 
 
 					if( isset( $contentStructure[ $slug ] ) ){
 
 						// $post = get_post( $contentStructure[ $slug ]['ID'] );
+
 
 						$data = get_metadata_by_mid ( 'post' , $contentStructure[ $slug ]['slug_ID'] );
 
@@ -151,6 +156,7 @@ class wpcomponent_edit
 						$editeur->elementsRemove = implode(',', $metabox_structure);
 
 					}
+					// else : new fields : no structure, no ID
 
 
 					switch ( $slugType ) {
@@ -169,6 +175,10 @@ class wpcomponent_edit
 
 						case 'link':
 							$editeur->getNewLink();
+							break;
+
+						case 'number':
+							$editeur->getNewNumber();
 							break;
 
 						case 'option':

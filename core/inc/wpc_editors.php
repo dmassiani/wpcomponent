@@ -79,6 +79,10 @@ class wpcomponent_editors
 						$this->getNewLink();
 						break;
 
+					case 'number':
+						$this->getNewNumber();
+						break;
+
 					case 'option':
 						$this->getNewOption();
 						break;
@@ -316,7 +320,33 @@ class wpcomponent_editors
     	<div class="wpc_element-input wp-core-ui wp-title-wrap">
     		<div class="inner">
 
-					<input type="text" id="<?=$this->container_id?>_title" name="wpcomponent_title_[]" value="<?=$this->content?>" class="text required">
+					<input type="text" id="<?=$this->container_id?>_title" name="wpcomponent_title_[]" value="<?=$this->content?>" class="text">
+
+			</div>
+		</div>
+    	<?php
+
+        $this->closeElement();
+ 
+    }
+
+	/* ---------------------------------------------------
+
+		Nouveau nombre
+		
+	/* --------------------------------------------------- */
+
+    public function getNewNumber()
+    {
+    	$this->type = 'number';
+    	$this->openElement();
+
+    	?>
+
+    	<div class="wpc_element-input wp-core-ui wp-title-wrap">
+    		<div class="inner">
+
+					<input type="number" id="<?=$this->container_id?>_number" name="wpcomponent_number_[]" value="<?=$this->content?>" class="text">
 
 			</div>
 		</div>

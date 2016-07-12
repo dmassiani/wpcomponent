@@ -50,6 +50,10 @@ class wpcomponent_post
 					$wpc_links = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_link_']);
 				}
 
+				if( !empty( $_POST['wpcomponent_number_'] ) && is_array($_POST['wpcomponent_number_']) ){
+					$wpc_numbers = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_number_']);
+				}
+
 				if( !empty( $_POST['wpcomponent_option_'] ) && is_array($_POST['wpcomponent_option_']) ){
 					$wpc_options = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_option_']);
 				}
@@ -103,7 +107,6 @@ class wpcomponent_post
 					}
 				}
 
-				// if( isset( $wpc_posts ) && count( $wpc_posts ) != 0 ){
 				if( isset( $wpc_metabox ) && count( $wpc_metabox ) != 0 ){
 
 					$wpc_structure = new wpcomponent_structure();
@@ -136,6 +139,7 @@ class wpcomponent_post
 					$i_optionswitch 	= 0;
 					$i_link 			= 0;
 					$i_image 			= 0;
+					$i_number 			= 0;
 
 					$metas = [];
 
@@ -158,11 +162,8 @@ class wpcomponent_post
 
 							// pour chaque element de la structure on retrouve sa data
 							// les elements sont théoriquement dans l'ordre.
-
 							foreach( $metabox_structure as $key => $element ):
 
-								// on indique que par défaut ce n'est pas un update
-								$update_content = false;
 
 								// on regénere les data du post
 								$wpc_newpost = array(
@@ -173,11 +174,12 @@ class wpcomponent_post
 								  	,'comment_status' 	=> 'closed'
 								);
 
+								// on indique que par défaut ce n'est pas un update
+								$update_content = false;
 								// s'il s'agit d'un update
 								$keyTrimed = trim($wpc_slug_ID[ $key_element ]);
 
 								if( !empty( $keyTrimed ) ){
-									
 									// on indique à wordpress un ID pour signifier d'updater
 									$wpc_newpost['slug_ID'] = $wpc_slug_ID[ $key_element ];
 									$update_content = true;
@@ -205,6 +207,11 @@ class wpcomponent_post
 									case 'link':
 										$wpc_newpost['post_content'] = $wpc_links[ $i_link ];
 										$i_link++;
+										break;
+
+									case 'number':
+										$wpc_newpost['post_content'] = $wpc_numbers[ $i_number ];
+										$i_number++;
 										break;
 
 									case 'option':

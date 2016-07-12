@@ -67,7 +67,7 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		break;
 
 	        	case 'title' :
-	        		$wpcomponent_content = get_wpc_title( $slug );
+	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
 
 	        	case 'option' :
@@ -87,7 +87,11 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		break;
 
 	        	case 'link' :
-	        		$wpcomponent_content = get_wpc_link( $slug  );
+	        		$wpcomponent_content = get_wpc_generic( $slug  );
+	        		break;
+
+	        	case 'number' :
+	        		$wpcomponent_content = get_wpc_generic( $slug  );
 	        		break;
 
 	        }
@@ -204,46 +208,6 @@ function get_wpc_chapter( $slug = false, $echo = false ){
 }
 
 /**
- * get title
- *
- *
- */
-function get_wpc_title( $slug = false, $echo = false ){
-
-	global $post;
-	global $wpc_stories;
-	global $wpc_current_wpc;
-
-	if( empty( $wpc_stories ) ) define_wpc_stories();
-	if( empty( $wpc_stories ) ) return;
-
-	if( $slug === false ) return;
-
-	foreach( $wpc_current_wpc['contents'] as $key => $element ){
-
-		if( $element['slug'] === $slug ){
-
-			$the_chapter_slugID = $element['slug_ID'];
-			break;
-
-		}
-
-	}
-
-
-
-	if( !empty( $the_chapter_slugID ) ):
-		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		if( $echo ){
-			return $data->meta_value;
-		}else{
-			return $data->meta_value;
-		}
-	endif;
-
-}
-
-/**
  * get option
  *
  *
@@ -282,11 +246,11 @@ function get_wpc_option( $slug = false, $echo = false ){
 }
 
 /**
- * get link
+ * get generic data
  *
  *
  */
-function get_wpc_link( $slug = false, $echo = false ){
+function get_wpc_generic( $slug = false, $echo = false ){
 
 	global $post;
 	global $wpc_stories;
@@ -309,11 +273,11 @@ function get_wpc_link( $slug = false, $echo = false ){
 	}
 
 	if( !empty( $the_chapter_slugID ) ):
-		$the_chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
+		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		if( $echo ){
-			return get_permalink( $the_chapter->meta_value);
+			return get_permalink( $data->meta_value);
 		}else{
-			return get_permalink( $the_chapter->meta_value);
+			return get_permalink( $data->meta_value);
 		}
 	endif;
 
@@ -424,10 +388,8 @@ function get_wpcomponent_template( $wpc_name, $folder, $folder_type ){
 
 
 	if( $folder_type === 'theme' ){
-
 		return get_template_part(  'wpcomponent/' . $folder .'/'. $wpc_name );
 	}else{
-
 		return wpcomponent_locate_template( $wpc_name, WPCOMPONENT_DIR . '/templates/' . $folder .'/' );
 	}
 
