@@ -124,7 +124,7 @@ class wpcomponent_edit
 					// --------------------------------------------------
 
 					$editeur->slug 				= $slug;
-					$editeur->container_id 	= "wpc_editor_" . ( $container + $keyS + 1 );
+					$editeur->container_id 		= "wpc_editor_" . ( $container + $keyS + 1 );
 					$editeur->name 				= $wpc_structure->wpcomponent_getNameFileSlug( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
 					$slugType 					= $wpc_structure->wpcomponent_slugType( $editeur->folder_type, $editeur->folder, $editeur->file, $editeur->slug );
 
@@ -179,6 +179,10 @@ class wpcomponent_edit
 
 						case 'number':
 							$editeur->getNewNumber();
+							break;
+
+						case 'switch':
+							$editeur->getNewSwitch();
 							break;
 
 						case 'option':

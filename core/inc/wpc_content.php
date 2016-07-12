@@ -47,10 +47,14 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	if( $slug === false ) return;
 	if( $size === false ) $size = 'full';
 
+	// define default content
+	$wpcomponent_content = '';
 
 	foreach( $wpc_current_wpc['contents'] as $key => $element ){
 
+
 	    if( $element['slug'] === $slug ){
+
 
 	        $the_chapter_slugID = $element['slug_ID'];
 
@@ -63,36 +67,46 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		break;
 
 	        	case 'editor' :
-	        		$wpcomponent_content = get_wpc_chapter( $slug  );
+	        		$wpcomponent_content = get_wpc_chapter( $slug );
 	        		break;
 
 	        	case 'title' :
 	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
 
-	        	case 'option' :
-	        		$wpcomponent_content = get_wpc_option( $slug  );
-	        		break;
-
-	        	case 'option-number' :
-	        		$wpcomponent_content = get_wpc_option( $slug  );
-	        		break;
-	        		
-	        	case 'option-switch' :
-	        		$wpcomponent_content = get_wpc_option( $slug  );
-	        		break;
-
-	        	case 'option-select' :
-	        		$wpcomponent_content = get_wpc_option( $slug  );
-	        		break;
-
 	        	case 'link' :
-	        		$wpcomponent_content = get_wpc_generic( $slug  );
+	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
 
 	        	case 'number' :
-	        		$wpcomponent_content = get_wpc_generic( $slug  );
+	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
+
+	        	case 'switch' :
+	        		$wpcomponent_content = get_wpc_generic( $slug );
+	        		break;
+
+	        	/**
+	        	 * OPTIONS
+	        	 *
+	        	 *
+	        	 */
+	        	case 'option' :
+	        		$wpcomponent_content = get_wpc_option( $slug );
+	        		break;
+
+	        	case 'option-number' :
+	        		$wpcomponent_content = get_wpc_option( $slug );
+	        		break;
+	        		
+	        	case 'option-switch' :
+	        		$wpcomponent_content = get_wpc_option( $slug );
+	        		break;
+
+	        	case 'option-select' :
+	        		$wpcomponent_content = get_wpc_option( $slug );
+	        		break;
+
 
 	        }
 
@@ -194,7 +208,6 @@ function get_wpc_chapter( $slug = false, $echo = false ){
 	if( !empty( $the_chapter_slugID ) ):
 
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		// $wpc_data = apply_filters('the_content', $data->meta_value );
 		$wpc_data = wpautop( $data->meta_value );
 
 		if( $echo ){
@@ -212,7 +225,7 @@ function get_wpc_chapter( $slug = false, $echo = false ){
  *
  *
  */
-function get_wpc_option( $slug = false, $echo = false ){
+function get_wpc_option( $slug = false ){
 
 	global $post;
 	global $wpc_stories;
@@ -236,11 +249,7 @@ function get_wpc_option( $slug = false, $echo = false ){
 
 	if( !empty( $the_chapter_slugID ) ):
 		$the_chapter = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		if( $echo ){
-			return $the_chapter->meta_value;
-		}else{
-			return $the_chapter->meta_value;
-		}
+		return $the_chapter->meta_value;
 	endif;
 
 }
@@ -250,7 +259,7 @@ function get_wpc_option( $slug = false, $echo = false ){
  *
  *
  */
-function get_wpc_generic( $slug = false, $echo = false ){
+function get_wpc_generic( $slug = false ){
 
 	global $post;
 	global $wpc_stories;
@@ -274,11 +283,7 @@ function get_wpc_generic( $slug = false, $echo = false ){
 
 	if( !empty( $the_chapter_slugID ) ):
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		if( $echo ){
-			return get_permalink( $data->meta_value);
-		}else{
-			return get_permalink( $data->meta_value);
-		}
+		return get_permalink( $data->meta_value);
 	endif;
 
 }

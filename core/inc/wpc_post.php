@@ -54,6 +54,10 @@ class wpcomponent_post
 					$wpc_numbers = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_number_']);
 				}
 
+				if( !empty( $_POST['wpcomponent_switch_'] ) && is_array($_POST['wpcomponent_switch_']) ){
+					$wpc_switchs = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_switch_']);
+				}
+
 				if( !empty( $_POST['wpcomponent_option_'] ) && is_array($_POST['wpcomponent_option_']) ){
 					$wpc_options = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_option_']);
 				}
@@ -140,6 +144,9 @@ class wpcomponent_post
 					$i_link 			= 0;
 					$i_image 			= 0;
 					$i_number 			= 0;
+					$i_switch 			= 0;
+					$i_options 			= 0;
+					$i_fields			= 0;
 
 					$metas = [];
 
@@ -148,90 +155,101 @@ class wpcomponent_post
 
 					foreach ($wpc_metabox as $key_meta => $metabox) {
 
-							$folder_type= $wpc_folder_types[ $key_meta ];
-							$folder 	= $wpc_folder[ $key_meta ];
-							$file 		= $wpc_files[ $key_meta ];
-							$template 	= $wpc_templates[ $key_meta ];
-							$disable = 'off';
+							$folder_type 	= $wpc_folder_types[ $key_meta ];
+							$folder 		= $wpc_folder[ $key_meta ];
+							$file 			= $wpc_files[ $key_meta ];
+							$template 		= $wpc_templates[ $key_meta ];
+							$disable 		= 'off';
+							$i_editor		= 0;
+
 							unset($meta_content);
-							$i_editor			= 0;
 
 
 							// on récupère la structure de la metabox grace au nom du fichier
 							$metabox_structure = $wpc_structure->wpcomponent_get_fileStructure( $folder_type, $folder, $file );
 
-							// pour chaque element de la structure on retrouve sa data
-							// les elements sont théoriquement dans l'ordre.
 							foreach( $metabox_structure as $key => $element ):
 
 
-								// on regénere les data du post
-								$wpc_newpost = array(
-								  	'post_status'    	=> $status
-								  	,'post_type'      	=> 'wpc_content'
-								  	,'ping_status'    	=> 'closed'
-								  	,'post_author'		=> $user_ID
-								  	,'comment_status' 	=> 'closed'
-								);
+								$key = array_search($element->slug, $wpc_slugs);
 
-								// on indique que par défaut ce n'est pas un update
-								$update_content = false;
-								// s'il s'agit d'un update
-								$keyTrimed = trim($wpc_slug_ID[ $key_element ]);
+								// editor $wpc_posts[ $key ];
+								// le slug $wpc_slugs[ $key ];
+								// le slug Id $wpc_slug_ID[ $key ];
 
-								if( !empty( $keyTrimed ) ){
-									// on indique à wordpress un ID pour signifier d'updater
-									$wpc_newpost['slug_ID'] = $wpc_slug_ID[ $key_element ];
+								if( isset( $wpc_slug_ID[ $key ] ) && is_int( $wpc_slug_ID[ $key ] ) ){
 									$update_content = true;
-
+								}else{
+									$update_content = false;
 								}
+
+								// on regénere les data du post
+								$wpc_newpost = array();
 
 								// gestion du contenu en fonction du type
 								switch ( $element->type ) {
 									case 'image':
 										$wpc_newpost['post_content'] = $wpc_images[ $i_image ];
 										$i_image++;
+										$i_fields++;
 										break;
 
 									case 'editor':
-										$everyOptionTraited = $i_option + $i_optionnumber + $i_optionswitch + $i_optionselect;
-										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $key_element - $everyOptionTraited ] ] );
+										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $key ] ] );
 										$i_editor++;
+										$i_fields++;
 										break;
 
 									case 'title':
 										$wpc_newpost['post_content'] = $wpc_titles[ $i_title ];
 										$i_title++;
+										$i_fields++;
 										break;
 
 									case 'link':
 										$wpc_newpost['post_content'] = $wpc_links[ $i_link ];
 										$i_link++;
+										$i_fields++;
 										break;
 
 									case 'number':
 										$wpc_newpost['post_content'] = $wpc_numbers[ $i_number ];
 										$i_number++;
+										$i_fields++;
+										break;
+
+									case 'switch':
+										if(isset($wpc_switchs)){
+											$wpc_newpost['post_content'] = $wpc_switchs[ $i_switch ];
+										}else{
+											$wpc_newpost['post_content'] = 'off';
+										}
+										$i_switch++;
+										$i_fields++;
 										break;
 
 									case 'option':
 										$wpc_newpost['post_content'] = $wpc_options[ $i_option ];
 										$i_option++;
+										$i_options++;
 										break;
 
 									case 'option-number':
 										$wpc_newpost['post_content'] = $wpc_optionsnumber[ $i_optionnumber ];
 										$i_optionnumber++;
+										$i_options++;
 										break;
 
 									case 'option-switch':
 										$wpc_newpost['post_content'] = $wpc_optionsswitch[ $i_optionswitch ];
 										$i_optionswitch++;
+										$i_options++;
 										break;
 
 									case 'option-select':
 										$wpc_newpost['post_content'] = $wpc_optionsselect[ $i_optionselect ];
 										$i_optionselect++;
+										$i_options++;
 										break;
 								}
 
@@ -243,6 +261,7 @@ class wpcomponent_post
 
 								}else{
 
+									$wpc_newpost['slug_ID'] = $wpc_slug_ID[ $key_element - $i_options ];
 									$slug_id = $wpc_newpost['slug_ID'];
 									$content = $wpc_newpost['post_content'];
 
@@ -252,9 +271,14 @@ class wpcomponent_post
 									 *
 									 */
 									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id=$slug_id");
+
+									
 									if( $meta == 0 ){
+
 										$slug_id = add_post_meta( $post_id, $element->slug, $content );
-									}else{
+
+									}else{	
+
 										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
 									}
 
@@ -298,7 +322,6 @@ class wpcomponent_post
 
 					if( $update_meta === true ):
 						// il y a eu un nouvel enregistrement
-
 						update_post_meta( $post_id, '_wpcomponent_structure', $metas );
 
 					else:
@@ -309,7 +332,7 @@ class wpcomponent_post
 
 				}
 
-			}// fin d'empty
+			}
 
 	}
 

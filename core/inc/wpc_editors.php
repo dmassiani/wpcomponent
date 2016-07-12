@@ -83,6 +83,10 @@ class wpcomponent_editors
 						$this->getNewNumber();
 						break;
 
+					case 'switch':
+						$this->getNewSwitch();
+						break;
+
 					case 'option':
 						$this->getNewOption();
 						break;
@@ -348,6 +352,37 @@ class wpcomponent_editors
 
 					<input type="number" id="<?=$this->container_id?>_number" name="wpcomponent_number_[]" value="<?=$this->content?>" class="text">
 
+			</div>
+		</div>
+    	<?php
+
+        $this->closeElement();
+ 
+    }
+
+	/* ---------------------------------------------------
+
+		Nouveau swicth
+		
+	/* --------------------------------------------------- */
+
+    public function getNewSwitch()
+    {
+    	$this->type = 'switch';
+    	$this->openElement();
+
+    	?>
+
+    	<div class="wpc_element-input wp-core-ui wp-title-wrap">
+    		<div class="inner">
+				<?php
+					if( $this->content === 'on' ){
+						$checked = 'checked';
+					}else{
+						$checked = '';
+					}
+					?>
+					<input type="checkbox" name="wpcomponent_switch_[]" class="js-switch" <?=$checked?> />
 			</div>
 		</div>
     	<?php
