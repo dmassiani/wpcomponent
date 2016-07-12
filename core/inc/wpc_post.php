@@ -136,6 +136,7 @@ class wpcomponent_post
 					$i_optionswitch 	= 0;
 					$i_link 			= 0;
 					$i_image 			= 0;
+					$i_editor			= 0;
 
 					$metas = [];
 
@@ -159,8 +160,6 @@ class wpcomponent_post
 
 							foreach( $metabox_structure as $key => $element ):
 
-								// $key_element représente le numéro de l'element dans la page
-
 								// on indique que par défaut ce n'est pas un update
 								$update_content = false;
 
@@ -179,7 +178,6 @@ class wpcomponent_post
 								if( !empty( $keyTrimed ) ){
 									
 									// on indique à wordpress un ID pour signifier d'updater
-									// $wpc_newpost['ID'] = $wpc_ID[ $key_element ];
 									$wpc_newpost['slug_ID'] = $wpc_slug_ID[ $key_element ];
 									$update_content = true;
 
@@ -193,7 +191,8 @@ class wpcomponent_post
 										break;
 
 									case 'editor':
-										$wpc_newpost['post_content'] = $_POST[ $wpc_posts[ $key_element ] ];
+										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $i_editor ] ] );
+										$i_editor++;
 										break;
 
 									case 'title':
@@ -207,25 +206,21 @@ class wpcomponent_post
 										break;
 
 									case 'option':
-										// ici les valeurs sont correctes
 										$wpc_newpost['post_content'] = $wpc_options[ $i_option ];
 										$i_option++;
 										break;
 
 									case 'option-number':
-										// ici les valeurs sont correctes
 										$wpc_newpost['post_content'] = $wpc_optionsnumber[ $i_optionnumber ];
 										$i_optionnumber++;
 										break;
 
 									case 'option-switch':
-										// ici les valeurs sont correctes
 										$wpc_newpost['post_content'] = $wpc_optionsswitch[ $i_optionswitch ];
 										$i_optionswitch++;
 										break;
 
 									case 'option-select':
-										// ici les valeurs sont correctes
 										$wpc_newpost['post_content'] = $wpc_optionsselect[ $i_optionselect ];
 										$i_optionselect++;
 										break;
@@ -239,9 +234,7 @@ class wpcomponent_post
 
 								}else{
 
-
 									$slug_id = $wpc_newpost['slug_ID'];
-
 									$content = $wpc_newpost['post_content'];
 
 									/**
@@ -251,7 +244,7 @@ class wpcomponent_post
 									 */
 									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id=$slug_id");
 									if( $meta == 0 ){
-										$slug_id = add_post_meta( $post_id, $element->slug, $wpc_newpost['post_content'] );
+										$slug_id = add_post_meta( $post_id, $element->slug, $content );
 									}else{
 										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
 									}

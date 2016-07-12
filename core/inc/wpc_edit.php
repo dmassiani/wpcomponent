@@ -51,7 +51,7 @@ class wpcomponent_edit
 
 		if( ! empty( $data ) ):
 
-			$editeur->postID 		= $post->ID;
+			$editeur->postID = $post->ID;
 
 
 			foreach ($data as $key => $metabox):

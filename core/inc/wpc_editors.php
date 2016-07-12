@@ -548,7 +548,7 @@ class wpcomponent_editors
 								<?php
 
 									foreach ($select_options as $key => $val) {
-										if( $value === $val ){
+										if( $value === trim($val) ){
 										?>
 										<option value="<?=$val?>" selected><?=ucfirst($val)?></option>
 										<?php

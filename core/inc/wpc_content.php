@@ -395,7 +395,6 @@ function get_wpc() {
     	if( $wpc['folder_type'] === 'plugin' ){
     		$folder = WPCOMPONENT_DEFAULT_TEMPLATE .'/'. $wpc['folder'];
     	}else{
-    		// $folder = get_template_directory() . '/' . WPCOMPONENT_FOLDER .'/'. $wpc['folder'];
     		$folder = get_stylesheet_directory() . '/' . WPCOMPONENT_FOLDER .'/'. $wpc['folder'];
     	}
 

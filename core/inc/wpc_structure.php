@@ -6,7 +6,7 @@
 //
 // ******************************************************
 
-class wpcomponent_structure extends wpcomponent_kickstarter
+class wpcomponent_structure
 {
 
 	public $folder;
