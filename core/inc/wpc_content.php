@@ -74,6 +74,18 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		$wpcomponent_content = get_wpc_option( $slug  );
 	        		break;
 
+	        	case 'option-number' :
+	        		$wpcomponent_content = get_wpc_option( $slug  );
+	        		break;
+	        		
+	        	case 'option-switch' :
+	        		$wpcomponent_content = get_wpc_option( $slug  );
+	        		break;
+
+	        	case 'option-select' :
+	        		$wpcomponent_content = get_wpc_option( $slug  );
+	        		break;
+
 	        	case 'link' :
 	        		$wpcomponent_content = get_wpc_link( $slug  );
 	        		break;

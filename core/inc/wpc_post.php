@@ -36,32 +36,35 @@ class wpcomponent_post
 				$wpc_types 			= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_type_']);
 				$wpc_files 			= array_map( array( "wpcomponent_utility", "sanitizeArrayFilesName" ), $_POST['wpcomponent_file_']);
 				$wpc_slugs 			= array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_slug_']);
-				$wpc_images 		= array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_image_id']);
 				$wpc_slug_ID 		= array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_slug_ID']);
 
-				if( !empty( $_POST['wpcomponent_title_'] ) ):
-					$wpc_titles = $_POST['wpcomponent_title_'];
-				endif;
+				if( !empty($_POST['wpcomponent_image_id'])){
+					$wpc_images  = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_image_id']);
+				}
 
-				if( !empty( $_POST['wpcomponent_link_'] ) ):
-					$wpc_links = $_POST['wpcomponent_link_'];
-				endif;
+				if( !empty( $_POST['wpcomponent_title_'] ) && is_array($_POST['wpcomponent_title_']) ){
+					$wpc_titles = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_title_']);
+				}
 
-				if( !empty( $_POST['wpcomponent_option_'] ) ):
-					$wpc_options = $_POST['wpcomponent_option_'];
-				endif;
+				if( !empty( $_POST['wpcomponent_link_'] ) && is_array($_POST['wpcomponent_link_']) ){
+					$wpc_links = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_link_']);
+				}
 
-				if( !empty( $_POST['wpcomponent_optionnumber'] ) ):
-					$wpc_optionsnumber 	= $_POST['wpcomponent_optionnumber'];
-				endif;
+				if( !empty( $_POST['wpcomponent_option_'] ) && is_array($_POST['wpcomponent_option_']) ){
+					$wpc_options = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_option_']);
+				}
 
-				if( !empty( $_POST['wpcomponent_optionselect_'] ) ):
-					$wpc_optionsselect 	= $_POST['wpcomponent_optionselect_'];
-				endif;
+				if( !empty( $_POST['wpcomponent_optionnumber_'] ) && is_array($_POST['wpcomponent_optionnumber_']) ){
+					$wpc_optionsnumber = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_optionnumber_']);
+				}
 
-				if( !empty( $_POST['wpcomponent_optionswitch_'] ) ):
-					$wpc_optionsswitch 	= $_POST['wpcomponent_optionswitch_'];
-				endif;
+				if( !empty( $_POST['wpcomponent_optionselect_'] ) && is_array($_POST['wpcomponent_optionselect_']) ){
+					$wpc_optionsselect = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_optionselect_']);
+				}
+
+				if( !empty( $_POST['wpcomponent_optionswitch_'] ) && is_array($_POST['wpcomponent_optionswitch_']) ){
+					$wpc_optionsswitch = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_optionswitch_']);
+				}
 
 				$user_ID = get_current_user_id();
 
