@@ -181,10 +181,6 @@ class wpcomponent_edit
 							$editeur->getNewNumber();
 							break;
 
-						case 'switch':
-							$editeur->getNewSwitch();
-							break;
-
 						case 'option':
 							$editeur->getNewOption();
 							break;

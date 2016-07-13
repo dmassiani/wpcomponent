@@ -82,10 +82,6 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
 
-	        	case 'switch' :
-	        		$wpcomponent_content = get_wpc_generic( $slug );
-	        		break;
-
 	        	/**
 	        	 * OPTIONS
 	        	 *

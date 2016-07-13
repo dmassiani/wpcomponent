@@ -83,10 +83,6 @@ class wpcomponent_editors
 						$this->getNewNumber();
 						break;
 
-					case 'switch':
-						$this->getNewSwitch();
-						break;
-
 					case 'option':
 						$this->getNewOption();
 						break;

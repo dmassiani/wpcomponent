@@ -54,10 +54,6 @@ class wpcomponent_post
 					$wpc_numbers = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_number_']);
 				}
 
-				if( !empty( $_POST['wpcomponent_switch_'] ) && is_array($_POST['wpcomponent_switch_']) ){
-					$wpc_switchs = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_switch_']);
-				}
-
 				if( !empty( $_POST['wpcomponent_option_'] ) && is_array($_POST['wpcomponent_option_']) ){
 					$wpc_options = array_map( array( "wpcomponent_utility", "sanitizeArrayTextFields" ), $_POST['wpcomponent_option_']);
 				}
@@ -144,7 +140,6 @@ class wpcomponent_post
 					$i_link 			= 0;
 					$i_image 			= 0;
 					$i_number 			= 0;
-					$i_switch 			= 0;
 					$i_options 			= 0;
 					$i_fields			= 0;
 
@@ -170,17 +165,16 @@ class wpcomponent_post
 
 							foreach( $metabox_structure as $key => $element ):
 
-
-								$key = array_search($element->slug, $wpc_slugs);
+								$key = array_search($element->slug, $wpc_slugs) + ( count( $metabox_structure ) * $key_meta );
 
 								// editor $wpc_posts[ $key ];
 								// le slug $wpc_slugs[ $key ];
 								// le slug Id $wpc_slug_ID[ $key ];
 
 								if( isset( $wpc_slug_ID[ $key ] ) && is_int( $wpc_slug_ID[ $key ] ) ){
-									$update_content = true;
-								}else{
 									$update_content = false;
+								}else{
+									$update_content = true;
 								}
 
 								// on regénere les data du post
@@ -218,16 +212,6 @@ class wpcomponent_post
 										$i_fields++;
 										break;
 
-									case 'switch':
-										if(isset($wpc_switchs)){
-											$wpc_newpost['post_content'] = $wpc_switchs[ $i_switch ];
-										}else{
-											$wpc_newpost['post_content'] = 'off';
-										}
-										$i_switch++;
-										$i_fields++;
-										break;
-
 									case 'option':
 										$wpc_newpost['post_content'] = $wpc_options[ $i_option ];
 										$i_option++;
@@ -261,8 +245,7 @@ class wpcomponent_post
 
 								}else{
 
-									$wpc_newpost['slug_ID'] = $wpc_slug_ID[ $key_element - $i_options ];
-									$slug_id = $wpc_newpost['slug_ID'];
+									$slug_id = $wpc_slug_ID[ $key ];
 									$content = $wpc_newpost['post_content'];
 
 									/**
