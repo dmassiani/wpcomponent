@@ -20,7 +20,7 @@ class wpcomponent_database
 			'post_type'  	=> 'WPC_content'
 			,'order_by'		=> 'ID'
 			,'order'		=> 'ASC'
-			,'post_parent'	=> $post_ID			
+			,'post_parent'	=> $post_ID
 			,'posts_per_page'=>-1
 			,'meta_key'		=> 'wpc_template'
 		);

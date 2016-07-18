@@ -12,7 +12,7 @@ class wpcomponent_structure
 	public $folder;
 	public $files;
 	public $fileHeader = array(
-		'Name' => 'Template Name', 
+		'Name' => 'Template Name',
 		'Description' => 'Description'
 	);
 	public $folder_exist = false;
@@ -35,16 +35,16 @@ class wpcomponent_structure
 
 		$this->utility = new wpcomponent_utility();
 		$this->currentFolder = $this->themeFolder;
-		
+
 	}
 
 	// ----------------------------------------------------------------
 	// Cette fonction est utilisé pour connaitre la structure d'un dossier (fichier et dossier enfant)
 	// ----------------------------------------------------------------
 
-	public function dir_to_array($dir) { 
+	public function dir_to_array($dir) {
 
-	   	$result = array(); 
+	   	$result = array();
 
 		if( !is_dir($dir) ){
 			return false;
@@ -52,23 +52,23 @@ class wpcomponent_structure
 
 		$cdir = scandir($dir);
 
-		foreach ($cdir as $key => $value) 
-		{ 
-		  if (!in_array($value,array(".",".."))) 
-		  { 
-		     if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) 
-		     { 
-		        $result[$value] = $this->dir_to_array($dir . DIRECTORY_SEPARATOR . $value); 
-		     } 
-		     else 
-		     { 
-		        $result[] = $value; 
-		     } 
-		  } 
-		} 
+		foreach ($cdir as $key => $value)
+		{
+		  if (!in_array($value,array(".","..")))
+		  {
+		     if (is_dir($dir . DIRECTORY_SEPARATOR . $value))
+		     {
+		        $result[$value] = $this->dir_to_array($dir . DIRECTORY_SEPARATOR . $value);
+		     }
+		     else
+		     {
+		        $result[] = $value;
+		     }
+		  }
+		}
 
-		return $result; 
-	} 
+		return $result;
+	}
 
 
 	// ---------------------------------------------------------------
@@ -102,8 +102,8 @@ class wpcomponent_structure
 					endforeach;
 
 
-					$tJson = array(					
-						'name'			=> 		$default[ 'Name' ], 
+					$tJson = array(
+						'name'			=> 		$default[ 'Name' ],
 						'description'	=> 		$default[ 'Description' ],
 						'file' 			=>		$file_parts['basename'],
 						'elements' 		=> 		$elements
@@ -116,7 +116,7 @@ class wpcomponent_structure
 			}
 
 		}
-		 
+
     	return $filesFounded;
 
 	}
@@ -148,8 +148,8 @@ class wpcomponent_structure
 
 			}
 
-			return $pluginFolder;	
-    		
+			return $pluginFolder;
+
     	}else{
     		return false;
     	}
@@ -184,12 +184,12 @@ class wpcomponent_structure
 
 		}
 
-		return $themesFolder;	
+		return $themesFolder;
 	}
 
     public function wpcomponent_register_templates(){
 
-		
+
 		// on prend on dossier et on le transforme en tableau de contenance dossier -> fichier
     	$themesFolder = $this->dir_to_array($this->themeFolder);
 
@@ -284,7 +284,7 @@ class wpcomponent_structure
 				endforeach;
 
 
-			}	
+			}
 
 		return $element;
     }
@@ -323,7 +323,7 @@ class wpcomponent_structure
 				endforeach;
 
 
-			}	
+			}
 
 		return $structure;
 
@@ -360,7 +360,7 @@ class wpcomponent_structure
 				endforeach;
 
 
-			}	
+			}
 
 		return $structure;
     }
@@ -431,7 +431,7 @@ class wpcomponent_structure
 				endforeach;
 
 
-			}	
+			}
 
 		return $structure;
     }
@@ -454,7 +454,7 @@ class wpcomponent_structure
 			$default = get_file_data(  $this->currentFolder .'/'. $folder .'/'. $file,  $this->fileHeader );
 			return $default[ 'Name' ];
 
-		}	
+		}
 
     }
 
@@ -486,7 +486,7 @@ class wpcomponent_structure
 			endforeach;
 
 
-		}	
+		}
 
     }
 

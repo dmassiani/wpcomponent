@@ -405,11 +405,11 @@ class wpcomponent_editors
     	$selectPage = null;
 		$options = '<option>Select post</option>';
 
-    	if( !empty( $this->content ) ){
-    		$selectType = get_post_type( $this->content );
-    		$selectPage = get_post( $this->content );
-    		// sometimes have an error view debug log
-    		$selectedPage = $selectPage->post_name;
+    	if( !empty( $this->content ) && $this->content != 'selectpost' ){
+				$selectType = get_post_type( $this->content );
+				$selectPage = get_post( $this->content );
+				// sometimes have an error view debug log
+				$selectedPage = $selectPage->post_name;
     	}
 
     		// get all custom post type
