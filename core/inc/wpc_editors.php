@@ -23,6 +23,7 @@ class wpcomponent_editors
     public $n_metabox;
     public $name;
     public $container_id;
+    public $switch_id;
     public $content;
     public $type;
     public $folder_type;
@@ -56,8 +57,10 @@ class wpcomponent_editors
 			foreach ($structureArray as $key => $element):
 
 				$this->element_id = $this->metabox_id + ( $key + 1 );
-				$new_editor = "wpc_editor_" . $this->element_id;	
+				$new_editor = "wpc_editor_" . $this->element_id;
 				$this->container_id = $new_editor;
+				$new_switch = "wpc_switch_" . $this->element_id;
+				$this->switch_id = $new_switch;
 
 				$this->slug = $slugsArray[ $key ];
 				$this->name = $namesArray[ $key ];
@@ -141,15 +144,15 @@ class wpcomponent_editors
 		<div class="wpc_container<?=$first?>" id="postbox-container-<?=$this->metabox_id?>">
 	        <div class="meta-box-sortables" id="wpc_container--template--<?=$this->metabox_id?>">
 	            <div class="postbox wpc closed">
-	
+
 					<!-- Wrapper -->
 					<div class="wpc_wrapper">
-						
+
 						<header class="wpc_header">
 							<h3 class="hndle">
 								<span>
 									<i class="icon -dragger"></i> <?=ucfirst($this->folder)?> : <strong><?=$this->template?></strong>
-									<?php 
+									<?php
 									/**
 									 * set visually disable
 									 *
@@ -175,21 +178,21 @@ class wpcomponent_editors
 
 							<?php
 							wp_nonce_field( 'wpc_editor', 'wpcomponent_nonce' );
-	} 
+	}
 	public function closeMetabox(){ ?>
 							<div class="clear"></div>
 						</div>
 						<!--  End inside -->
 
 						<div class="wpc_settings">
-							<?php 
-								// we adding disable option 
-								$this->disableComponent(); 
-								$this->getOptions(); 
+							<?php
+								// we adding disable option
+								$this->disableComponent();
+								$this->getOptions();
 							?>
 						</div>
 
-					</div> 
+					</div>
 					<!-- End Wrapper -->
 
 					<!-- Sidebar -->
@@ -203,9 +206,9 @@ class wpcomponent_editors
 <!-- 	                	<div class="wpc_sidebar-handle handlediv">
 	                	</div> -->
 	                	<!-- / Handle -->
-						
+
 						<div class="wpc_sidebar-actions">
-							
+
 							<?php
 							// if( $this->hasOptions() ){
 							?>
@@ -230,9 +233,9 @@ class wpcomponent_editors
 								</ul>
 							</div>
 							<!-- / Metabox Remover -->
-							
+
 						</div>
-			
+
 
 					</aside>
 					<!--  / Sidebar -->
@@ -250,7 +253,7 @@ class wpcomponent_editors
 		<div class="wpc_element wpc_element_<?=$this->type?>">
 
 			<h2>
-				<i class="icon -title"></i> <?=$this->name?> 
+				<i class="icon -title"></i> <?=$this->name?>
 			</h2>
 
 			<input type="hidden" name="wpcomponent_type_[]" value="<?=$this->type?>">
@@ -286,7 +289,7 @@ class wpcomponent_editors
 
 	/* ---------------------------------------------------
 
-		Nouvel editeur 
+		Nouvel editeur
 
 	/* --------------------------------------------------- */
 
@@ -300,14 +303,14 @@ class wpcomponent_editors
         echo ob_get_clean();
 
         $this->closeElement();
- 
+
     }
 
 
 	/* ---------------------------------------------------
 
 		Nouveau titre
-		
+
 	/* --------------------------------------------------- */
 
     public function getNewTitle()
@@ -327,13 +330,13 @@ class wpcomponent_editors
     	<?php
 
         $this->closeElement();
- 
+
     }
 
 	/* ---------------------------------------------------
 
 		Nouveau nombre
-		
+
 	/* --------------------------------------------------- */
 
     public function getNewNumber()
@@ -353,13 +356,13 @@ class wpcomponent_editors
     	<?php
 
         $this->closeElement();
- 
+
     }
 
 	/* ---------------------------------------------------
 
 		Nouveau swicth
-		
+
 	/* --------------------------------------------------- */
 
     public function getNewSwitch()
@@ -384,13 +387,13 @@ class wpcomponent_editors
     	<?php
 
         $this->closeElement();
- 
+
     }
 
 	/* ---------------------------------------------------
 
 		Nouveau lien
-		
+
 	/* --------------------------------------------------- */
 
     public function getNewLink()
@@ -417,7 +420,7 @@ class wpcomponent_editors
 
 		$output = 'objects'; // names or objects, note names is the default
 
-		$post_types = get_post_types( $args, $output ); 
+		$post_types = get_post_types( $args, $output );
 
 		foreach ( $post_types as $post_type ) {
 
@@ -425,13 +428,13 @@ class wpcomponent_editors
 			$optionsType.= '<option value="' . $post_type->name . '"' . $selected . '>' . $post_type->name . '</option>';
 
 		}
-		
+
 		$args = array(
 		   'public'   => true,
 		   '_builtin' => false
 		);
 
-		$post_types = get_post_types( $args, $output ); 
+		$post_types = get_post_types( $args, $output );
 
 		foreach ( $post_types  as $post_type ) {
 
@@ -451,7 +454,7 @@ class wpcomponent_editors
 	            'post_type'        => $selectType,
 	            'post_status'      => 'publish'
 	        );
-	        $posts_array = get_posts( $args ); 
+	        $posts_array = get_posts( $args );
 
 	        foreach ( $posts_array as $post_type ) {
 	        	$selected = ( $post_type->ID == $this->content ) ? 'selected' : '';
@@ -479,14 +482,14 @@ class wpcomponent_editors
     	<?php
 
         $this->closeElement();
- 
+
     }
 
 
 	/* ---------------------------------------------------
 
-		Nouvelle image 
-		
+		Nouvelle image
+
 	/* --------------------------------------------------- */
 
     public function getNewImage(){
@@ -499,7 +502,7 @@ class wpcomponent_editors
     	?>
     	<div class="wpc_element-input wp-core-ui wp-image-wrap">
     		<div class="inner">
-    		
+
 		    	<?php
 
 		    	if( !empty( $this->content ) && is_numeric( $this->content ) ){
@@ -510,7 +513,7 @@ class wpcomponent_editors
 
 		    	?>
 		    	<input type="hidden" name="wpcomponent_image_id[]" class="wpc_image_id" value="<?=$this->content?>" />
-    		
+
 				<input data-upload_image="<?=_e('Meta content Image', 'wpcomponent')?>" data-upload_image_button="<?=_e('Select Image', 'wpcomponent')?>" id="<?=$this->container_id?>_image" class="upload_image_button button<?=$hideUploader?>" type="button" value="<?php _e('Upload Image', 'wpcomponent') ?>" />
 				<div>
 					<a href="#" class="wpc_imageRemover<?=$showRemover?>"><?php _e( 'Remove Image', 'wpcomponent' ) ?></a>
@@ -520,14 +523,14 @@ class wpcomponent_editors
     	</div>
 		<?php
 		$this->closeElement();
- 
+
     }
 
 
 	/* ---------------------------------------------------
 
 		Disable component
-		
+
 	/* --------------------------------------------------- */
 
     public function disableComponent()
@@ -555,16 +558,16 @@ class wpcomponent_editors
 		</div>
 		<?php
         $this->options.= ob_get_contents();
-		
+
 		ob_get_clean();
- 
- 
+
+
     }
 
 	/* ---------------------------------------------------
 
-		Nouvelle option 
-		
+		Nouvelle option
+
 	/* --------------------------------------------------- */
 
     public function getNewOption( $type = null )
@@ -613,7 +616,7 @@ class wpcomponent_editors
 										?>
 										<option value="<?=$val?>" selected><?=ucfirst($val)?></option>
 										<?php
-										}else{											
+										}else{
 										?>
 										<option value="<?=$val?>"><?=ucfirst($val)?></option>
 										<?php
@@ -640,10 +643,10 @@ class wpcomponent_editors
         $this->closeElement();
 
         $this->options.= ob_get_contents();
-		
+
 		ob_get_clean();
- 
- 
+
+
     }
 
 

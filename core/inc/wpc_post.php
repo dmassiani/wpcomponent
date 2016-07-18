@@ -72,7 +72,6 @@ class wpcomponent_post
 
 				$user_ID = get_current_user_id();
 
-
 				if ( false !== wp_is_post_revision( $post_id ) ) {
 				    return;
 				}
@@ -110,7 +109,7 @@ class wpcomponent_post
 				if( isset( $wpc_metabox ) && count( $wpc_metabox ) != 0 ){
 
 					$wpc_structure = new wpcomponent_structure();
-							
+
 					remove_action( 'save_post', array( $this, 'wpcomponent_save' ) );
 
 					global $wpdb;
@@ -119,7 +118,7 @@ class wpcomponent_post
 					$update_content = false;
 					$update_meta = true;
 
-					
+
 					$container = '';
 					$container_cache = '';
 					$file = '';
@@ -144,6 +143,16 @@ class wpcomponent_post
 					$i_fields			= 0;
 
 					$metas = [];
+					$resultsArray = array();
+
+					// foreach ($metabox_structure as $id => $key) {
+					//     $resultsArray[$key] = array(
+					//         'wpc_slugs'  => $wpc_slugs[$id],
+					//         'metabox_structure' => $metabox_structure[$id]
+					//     );
+					// }
+
+					// log_it($resultsArray);
 
 					// new
 					$key_element = 0;
@@ -159,13 +168,13 @@ class wpcomponent_post
 
 							unset($meta_content);
 
-
 							// on récupère la structure de la metabox grace au nom du fichier
 							$metabox_structure = $wpc_structure->wpcomponent_get_fileStructure( $folder_type, $folder, $file );
 
 							foreach( $metabox_structure as $key => $element ):
 
-								$key = array_search($element->slug, $wpc_slugs) + ( count( $metabox_structure ) * $key_meta );
+								// $key = array_search($element->slug, $wpc_slugs) + ( count( $metabox_structure ) * $key_meta );
+								$key = array_search($element->slug, $wpc_slugs);
 
 								// editor $wpc_posts[ $key ];
 								// le slug $wpc_slugs[ $key ];
@@ -225,7 +234,12 @@ class wpcomponent_post
 										break;
 
 									case 'option-switch':
-										$wpc_newpost['post_content'] = $wpc_optionsswitch[ $i_optionswitch ];
+										if( isset( $wpc_optionsswitch )
+											&& isset( $wpc_optionsswitch[ $i_optionswitch ] ) ){
+											$wpc_newpost['post_content'] = 'on';
+										}else{
+											$wpc_newpost['post_content'] = 'off';
+										}
 										$i_optionswitch++;
 										$i_options++;
 										break;
@@ -253,16 +267,16 @@ class wpcomponent_post
 									 * I can add many options in template, I need to make this post meta
 									 *
 									 */
-									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id=$slug_id");
+									$meta = $wpdb->query("SELECT meta_id FROM $wpdb->postmeta WHERE meta_id='".$slug_id."'");
 
-									
+
 									if( $meta == 0 ){
 
 										$slug_id = add_post_meta( $post_id, $element->slug, $content );
 
-									}else{	
+									}else{
 
-										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id=$slug_id");
+										$wpdb->query("UPDATE $wpdb->postmeta SET meta_value='".$content."' WHERE meta_id='".$slug_id."'");
 									}
 
 								}
@@ -283,18 +297,18 @@ class wpcomponent_post
 							 *
 							 *
 							 */
-							if( isset($_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta] ] ) 
+							if( isset($_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta] ] )
 								&& $_POST['wpcomponent_disable_' . $wpc_metabox[$key_meta] ] === 'on' ){
 								$disable = 'on';
 							}
 
 
-							$metas[] = array( 
-								'file' 			=> $file, 
-								'folder_type' 	=> $folder_type, 
-								'folder' 		=> $folder, 
-								'template' 		=> $template, 
-								'container' 	=> $metabox, 
+							$metas[] = array(
+								'file' 			=> $file,
+								'folder_type' 	=> $folder_type,
+								'folder' 		=> $folder,
+								'template' 		=> $template,
+								'container' 	=> $metabox,
 								'content' 		=> $meta_content,
 								'disable'		=> $disable
 							);

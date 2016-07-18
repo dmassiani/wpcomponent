@@ -34,11 +34,9 @@
 				'value': jQuery(this).is(':checked')
 			};
 
-			console.log(ajaxurl, data);
-
 			jQuery.post( ajaxurl, data );
 		})
-		
+
 		// -----------------------------------------------
 
 		//
@@ -72,7 +70,6 @@
 
 			$.post( ajaxUrl, data, function(response) {
 
-				console.log(response);
 				jQuery('.wpc_admin--reponse').append(response);
 
 			});
