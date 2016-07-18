@@ -6,7 +6,7 @@
 Plugin Name: WordPress Component
 Plugin URI: http://wpcomponent.com/
 Description: WPComponent enable component for web artist.
-Version: 2.1.1
+Version: 2.1.2
 Author: David Massiani
 Author URI: http://davidmassiani.com
 License: GPLv2 or later
@@ -15,7 +15,7 @@ Text Domain: wpcomponent
 
 
 // Folder name
-define ( 'WPCOMPONENT_VERSION', '2.1.1' );
+define ( 'WPCOMPONENT_VERSION', '2.1.2' );
 define ( 'WPCOMPONENT_FOLDER',  'wpcomponent' );
 
 define ( 'WPCOMPONENT_URL', plugins_url('', __FILE__) );
@@ -43,7 +43,7 @@ class wpcomponent_kickstarter
 {
 
 	public $templates = [];
-	
+
     public $wpc_ajax;
     public $wpc_metabox;
     public $wpc_database;
@@ -76,9 +76,9 @@ class wpcomponent_kickstarter
     		$this->wpcomponent_include_admin_class();
 
     	// ===================================================
-    	// 
+    	//
     	// add register plugins and styles
-    	// 
+    	//
     	// ===================================================
 
     		$this->wpcomponent_register_plugins();
@@ -132,7 +132,7 @@ class wpcomponent_kickstarter
 	                })
 	            })(jQuery)
 	        </script>
-	    <?php 
+	    <?php
 	    }
     	$this->wpcomponent_register_twitter();
 	}
@@ -172,7 +172,7 @@ class wpcomponent_kickstarter
     // ============================================================
 
     public function wpcomponent_register_plugins(){
-		// register javascript 
+		// register javascript
 		$scripts = array();
 
 		$scripts[] = array(
@@ -228,12 +228,12 @@ class wpcomponent_kickstarter
     public function wpcomponent_register_styles(){
 		// register styles
 		$styles = array();
-		
+
 		$styles[] = array(
 			'handle'	=> 'wpcomponent-css',
 			'src'		=> WPCOMPONENT_URL . '/front/css/wpcomponent.css'
 		);
-		
+
 		foreach( $styles as $style )
 		{
 			wp_enqueue_style( $style['handle'], $style['src'] );
@@ -244,12 +244,12 @@ class wpcomponent_kickstarter
 function wpcomponent()
 {
 	global $wpcomponent;
-	
+
 	if( !isset($wpcomponent) )
 	{
 		$wpcomponent = new wpcomponent_kickstarter();
 	}
-	
+
 	return $wpcomponent;
 }
 

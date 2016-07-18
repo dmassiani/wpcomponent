@@ -57,6 +57,9 @@ No upgrade
 
 == Changelog ==
 
+= 2.1.2 =
+* Fix internal index bug in switch options
+
 = 2.1.1 =
 * Features : add disable component option
 
