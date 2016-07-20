@@ -201,9 +201,6 @@ class wpcomponent_post
 										break;
 
 									case 'editor':
-										// log_it($_POST);
-										// log_it($wpc_posts);
-										// log_it($key);
 										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $key ] ] );
 										$i_editor++;
 										$i_fields++;
