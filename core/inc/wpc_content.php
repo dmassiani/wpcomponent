@@ -271,6 +271,7 @@ function get_wpc_generic( $slug = false ){
 		if( $element['slug'] === $slug ){
 
 			$the_chapter_slugID = $element['slug_ID'];
+			$the_chapter_type = $element['type'];
 			break;
 
 		}
@@ -279,7 +280,11 @@ function get_wpc_generic( $slug = false ){
 
 	if( !empty( $the_chapter_slugID ) ):
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
-		return get_permalink( $data->meta_value);
+		if($the_chapter_type === 'link') {
+			return '<a href="' . get_permalink($data->meta_value, false) . '">' . get_the_title($data->meta_value) . '</a>';
+		} else {
+			return $data->meta_value;
+		}
 	endif;
 
 }
