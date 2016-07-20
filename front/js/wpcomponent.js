@@ -169,8 +169,16 @@
 			// We set multiple to false so only get one image from the uploader
 			attachment = file_frame.state().get('selection').first().toJSON();
 
+			// check if isset thumbnail size (wordpress don't generate thumbnail for small images)
+			if( $(attachment.sizes.thumbnail).length ) {
+				src = attachment.sizes.thumbnail.url
+			} else {
+				// if !isset thumbnail size, img is small so we can display url without size
+				src = attachment.url
+			}
 			$('<img>', {
-			    src: attachment.sizes.thumbnail.url
+			    src: src
+
 			}).insertBefore( selectedButton );
 
 
