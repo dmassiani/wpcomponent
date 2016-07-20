@@ -39,7 +39,7 @@ class wpcomponent_edit
 		/*
 
 			L'ordre des metas correspond à l'ordre des containers.
-			C'est à dire qu'un user peut tout à fait modifier l'ordre 
+			C'est à dire qu'un user peut tout à fait modifier l'ordre
 			en inversant les metabox.
 
 		*/
@@ -73,12 +73,12 @@ class wpcomponent_edit
 				/*
 					$fileSlugs représente la structure SLUG du fichier concerné
 				*/
-				// --------------------------------------------------		
-				$fileStructure 		= $wpc_structure->wpcomponent_getFileSlugs( 
-					$metabox['folder_type'], 
-					$metabox['folder'], 
-					$metabox['file'] 
-				); 
+				// --------------------------------------------------
+				$fileStructure 		= $wpc_structure->wpcomponent_getFileSlugs(
+					$metabox['folder_type'],
+					$metabox['folder'],
+					$metabox['file']
+				);
 
 				// --------------------------------------------------
 				/*
@@ -107,7 +107,7 @@ class wpcomponent_edit
 				// --------------------------------------------------
 				$editeur->openMetaBox( $key );
 
-			
+
 				// --------------------------------------------------
 				/*
 					Pour chaque slug du fichier on va chercher la data correspondante.
@@ -210,7 +210,7 @@ class wpcomponent_edit
 				// --------------------------------------------------
 				$editeur->closeMetaBox();
 				$metabox_structure = [];
-					
+
 
 			endforeach;
 

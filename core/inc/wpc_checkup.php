@@ -20,7 +20,7 @@ class wpcomponent_checkup
 		foreach ($theme_template as $key => $value) {
 
 
-			// $key = folder 
+			// $key = folder
 			// $value = component
 
 			if( gettype($value) === "array" ){
@@ -34,7 +34,7 @@ class wpcomponent_checkup
 
 					$template = json_decode($template);
 
-					// available 
+					// available
 						// $template->name
 						// $template->description
 						// $template->file

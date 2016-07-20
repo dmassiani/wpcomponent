@@ -24,7 +24,7 @@ class wpcomponent_remover
 
 			foreach ($elements as $key => $element) {
 
-				/** 
+				/**
 				 * $element représente l'id du meta à supprimer
 				 *
 				 */
@@ -35,8 +35,8 @@ class wpcomponent_remover
 			    // [meta_key] => anchor
 			    // [meta_value] => anchor test
 
-				$wpdb->query( 
-					$wpdb->prepare( 
+				$wpdb->query(
+					$wpdb->prepare(
 						"
 				        DELETE FROM $wpdb->postmeta
 						WHERE post_id = %d
@@ -75,7 +75,7 @@ class wpcomponent_remover
 			// pour chaque contenu :
 			foreach ($contents as $key_content => $content):
 				// si l'id est égale à un content('id)')
-			
+
 				foreach ($elements as $key_element => $id):
 
 					if( (int) $id === (int) $content['slug_ID'] ){

@@ -46,7 +46,7 @@ class wpcomponent_utility
 
 	public function isJSON($string){
 		return is_string($string) && is_object(json_decode($string)) ? true : false;
-	}	
+	}
 
 	public static function sanitizeArrayInt($value) {
 		return sanitize_key($value);

@@ -53,7 +53,7 @@ class wpcomponent_metabox
         // fonction qui affiche la meta dans la sidebar
         // --------------------------------------------------------------------
 
-        // note : 
+        // note :
         // structure des folders :
         // plugin : templates/**nom**
         // themes : wpcomponent/**nom**
@@ -109,7 +109,7 @@ class wpcomponent_metabox
             <?php
 
                         }
-                        
+
                     }
 
                 }
@@ -131,7 +131,7 @@ class wpcomponent_metabox
                         if($i === 0)$class=' class="first"';
                         else $class='';
 
-                        ?>                
+                        ?>
         <ol id="wpcomponent-theme-<?=$key_parent?>"<?=$class?>>
                         <?php
 
@@ -154,12 +154,12 @@ class wpcomponent_metabox
                     ?>
 
                             <li>
-                                <a href="#" 
+                                <a href="#"
                                 data-type="theme"
                                 data-folder="<?=$key_parent?>"
-                                data-file="<?=$template->file?>" 
-                                data-name="<?=$template->name?>" 
-                                data-structure="<?=$structure?>" 
+                                data-file="<?=$template->file?>"
+                                data-name="<?=$template->name?>"
+                                data-structure="<?=$structure?>"
                                 data-slugs="<?=$slugs?>"
                                 title="<?=$template->description?>">
                                     <h4><?=$template->name?></h4>
@@ -194,7 +194,7 @@ class wpcomponent_metabox
                                 $class='';
                             }
 
-                        ?>                
+                        ?>
         <ol id="wpcomponent-plugin-<?=$key_parent?>"<?=$class?>>
                         <?php
 
@@ -218,12 +218,12 @@ class wpcomponent_metabox
                     ?>
 
                             <li>
-                                <a href="#" 
+                                <a href="#"
                                 data-type="plugin"
                                 data-folder="<?=$key_parent?>"
-                                data-file="<?=$template->file?>" 
-                                data-name="<?=$template->name?>" 
-                                data-structure="<?=$structure?>" 
+                                data-file="<?=$template->file?>"
+                                data-name="<?=$template->name?>"
+                                data-structure="<?=$structure?>"
                                 data-slugs="<?=$slugs?>">
                                     <h4><?=$template->name?></h4>
                                     <p>
@@ -242,7 +242,7 @@ class wpcomponent_metabox
                     }
 
                 }
-                
+
             }
 
         ?>

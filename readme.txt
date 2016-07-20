@@ -57,6 +57,9 @@ No upgrade
 
 == Changelog ==
 
+= 2.1.3 =
+* Fix internal selectbox default value
+
 = 2.1.2 =
 * Fix internal index bug in switch options
 

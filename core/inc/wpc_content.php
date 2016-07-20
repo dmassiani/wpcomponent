@@ -12,7 +12,7 @@
  *
  */
 function the_wpcomponent_inside_the_content( $content ) {
-	if( get_option( 'wpcomponent_setting_enable_inside_the_content' ) == 'true' ){	
+	if( get_option( 'wpcomponent_setting_enable_inside_the_content' ) == 'true' ){
 		ob_start();
 		get_wpc();
 		$wpcomponent_content = ob_get_contents();
@@ -75,7 +75,7 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		break;
 
 	        	case 'link' :
-	        		$wpcomponent_content = get_wpc_generic( $slug );
+	        		$wpcomponent_content = get_wpc_link( $slug );
 	        		break;
 
 	        	case 'number' :
@@ -94,7 +94,7 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        	case 'option-number' :
 	        		$wpcomponent_content = get_wpc_option( $slug );
 	        		break;
-	        		
+
 	        	case 'option-switch' :
 	        		$wpcomponent_content = get_wpc_option( $slug );
 	        		break;
@@ -159,7 +159,7 @@ function get_wpc_illustration( $slug = false, $size = false, $echo = false ){
 
 
 		if( $echo ){
-			
+
 			$image = wp_get_attachment_image_src( $the_chapter->meta_value, $size );
 
 			if( $image ) {
@@ -171,7 +171,7 @@ function get_wpc_illustration( $slug = false, $size = false, $echo = false ){
 		}
 
 	endif;
-	
+
 }
 
 /**
@@ -279,6 +279,40 @@ function get_wpc_generic( $slug = false ){
 
 	if( !empty( $the_chapter_slugID ) ):
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
+		return $data->meta_value;
+	endif;
+
+}
+
+/**
+ * get link data
+ *
+ *
+ */
+function get_wpc_link( $slug = false ){
+
+	global $post;
+	global $wpc_stories;
+	global $wpc_current_wpc;
+
+	if( empty( $wpc_stories ) ) define_wpc_stories();
+	if( empty( $wpc_stories ) ) return;
+
+	if( $slug === false ) return;
+
+	foreach( $wpc_current_wpc['contents'] as $key => $element ){
+
+		if( $element['slug'] === $slug ){
+
+			$the_chapter_slugID = $element['slug_ID'];
+			break;
+
+		}
+
+	}
+
+	if( !empty( $the_chapter_slugID ) ):
+		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		return get_permalink( $data->meta_value);
 	endif;
 
@@ -316,7 +350,7 @@ function define_wpc_stories(){
 			$disable 		= $metas[ $key ]['disable'];
 			$contents 		= $metas[ $key ]['content'];
 
-			if( $disable === 'off' ){				
+			if( $disable === 'off' ){
 				$wpc_stories[] = array(
 					'folder_type' 		=> $folder_type,
 					'folder' 			=> $folder,
@@ -343,7 +377,7 @@ function get_wpc() {
 
 	// after custom query perhaps we need to reset global post
 	wp_reset_postdata();
-	
+
 	global $post;
 	global $wpc_stories;
 	global $wpc_current_wpc;
@@ -399,11 +433,11 @@ function get_wpcomponent_template( $wpc_name, $folder, $folder_type ){
 // extra function to load template in plugin folder
 /**
 *Extend WP Core get_template_part() function to load files from the within Plugin directory defined by PLUGIN_DIR_PATH constant
-* * Load the page to be displayed 
-* from within plugin files directory only 
-* * @uses wpcomponent_load_template() function 
-* * @param $slug * @param null $name 
-*/ 
+* * Load the page to be displayed
+* from within plugin files directory only
+* * @uses wpcomponent_load_template() function
+* * @param $slug * @param null $name
+*/
 
 function wpcomponent_locate_template($slug, $location,  $name = null) {
 
@@ -419,22 +453,22 @@ function wpcomponent_locate_template($slug, $location,  $name = null) {
 
 }
 
-/* Extend locate_template from WP Core 
-* Define a location of your plugin file dir to a constant in this case = PLUGIN_DIR_PATH 
-* Note: PLUGIN_DIR_PATH - can be any folder/subdirectory within your plugin files 
-*/ 
+/* Extend locate_template from WP Core
+* Define a location of your plugin file dir to a constant in this case = PLUGIN_DIR_PATH
+* Note: PLUGIN_DIR_PATH - can be any folder/subdirectory within your plugin files
+*/
 
-function wpcomponent_load_template($template_names, $location, $load = false, $require_once = true ) 
-{ 
-	$located = ''; 
-	foreach ( (array) $template_names as $template_name ) { 
-		if ( !$template_name ) continue; 
+function wpcomponent_load_template($template_names, $location, $load = false, $require_once = true )
+{
+	$located = '';
+	foreach ( (array) $template_names as $template_name ) {
+		if ( !$template_name ) continue;
 
-		/* search file within the PLUGIN_DIR_PATH only */ 
-		if ( file_exists( $location . $template_name)) { 
-			$located = $location . $template_name; 
-			break; 
-		} 
+		/* search file within the PLUGIN_DIR_PATH only */
+		if ( file_exists( $location . $template_name)) {
+			$located = $location . $template_name;
+			break;
+		}
 	}
 
 	if ( $load && '' != $located )

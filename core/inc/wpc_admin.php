@@ -90,8 +90,8 @@ class wpcomponent_admin
 		// ---------------------------------------------------
 
 
-		if ( isset( $_FILES ) 
-			&& !empty( $_FILES ) 
+		if ( isset( $_FILES )
+			&& !empty( $_FILES )
 			&& !empty($_FILES['wpcomponent_file_import']['tmp_name'])
 			) {
 
@@ -350,14 +350,14 @@ class wpcomponent_admin
 
 			<!-- Checkup current dev -->
 <!-- 			<div class="wpc_admin_tabs wpc_admin_tabs--checkup">
-				
+
 				<div class="wpc_admin--card">
 					<h2>Checkup</h2>
 					<a href="#" class="button button-blue" id="wpc-start">
 						Start
 					</a>
 					<div class="wpc_admin--reponse">
-						
+
 					</div>
 				</div>
 

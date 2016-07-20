@@ -51,7 +51,7 @@ class wpcomponent_ajax
             'post_type'        => $type,
             'post_status'      => 'publish'
         );
-        $posts_array = get_posts( $args ); 
+        $posts_array = get_posts( $args );
 
         $options = '<option>'. __('Select post', 'wpcomponent') .'</option>';
 
