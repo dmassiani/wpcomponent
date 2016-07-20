@@ -174,7 +174,10 @@ class wpcomponent_post
 							foreach( $metabox_structure as $key => $element ):
 
 								// $key = array_search($element->slug, $wpc_slugs) + ( count( $metabox_structure ) * $key_meta );
-								$key = array_search($element->slug, $wpc_slugs);
+								// $key = array_search($element->slug, $wpc_slugs);
+
+								$keys = array_keys( $wpc_slugs, $element->slug);
+								$key = $keys[$key_meta];
 
 								// editor $wpc_posts[ $key ];
 								// le slug $wpc_slugs[ $key ];
@@ -198,6 +201,9 @@ class wpcomponent_post
 										break;
 
 									case 'editor':
+										// log_it($_POST);
+										// log_it($wpc_posts);
+										// log_it($key);
 										$wpc_newpost['post_content'] = sanitize_text_field( $_POST[ $wpc_posts[ $key ] ] );
 										$i_editor++;
 										$i_fields++;
