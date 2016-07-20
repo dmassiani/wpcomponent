@@ -271,6 +271,7 @@ function get_wpc_generic( $slug = false ){
 		if( $element['slug'] === $slug ){
 
 			$the_chapter_slugID = $element['slug_ID'];
+			$the_chapter_type = $element['type'];
 			break;
 
 		}
