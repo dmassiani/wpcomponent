@@ -171,17 +171,13 @@ class wpcomponent_post
 							// on récupère la structure de la metabox grace au nom du fichier
 							$metabox_structure = $wpc_structure->wpcomponent_get_fileStructure( $folder_type, $folder, $file );
 
+							$structureData = array_slice($wpc_slugs, $key_element, count($metabox_structure));
+							$startKey = $key_element;
+
 							foreach( $metabox_structure as $key => $element ):
 
-								// $key = array_search($element->slug, $wpc_slugs) + ( count( $metabox_structure ) * $key_meta );
-								// $key = array_search($element->slug, $wpc_slugs);
-
-								$keys = array_keys( $wpc_slugs, $element->slug);
-								$key = $keys[$key_meta];
-
-								// editor $wpc_posts[ $key ];
-								// le slug $wpc_slugs[ $key ];
-								// le slug Id $wpc_slug_ID[ $key ];
+								$sectionArrayKey = array_search($element->slug, $structureData);
+								$key = $sectionArrayKey + $startKey;
 
 								if( isset( $wpc_slug_ID[ $key ] ) && is_int( $wpc_slug_ID[ $key ] ) ){
 									$update_content = false;
