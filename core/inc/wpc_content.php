@@ -78,6 +78,10 @@ function get_wpcomponent( $slug = false, $size = false, $echo = true ) {
 	        		$wpcomponent_content = get_wpc_link( $slug );
 	        		break;
 
+	        	case 'id' :
+	        		$wpcomponent_content = get_wpc_ID( $slug );
+	        		break;
+
 	        	case 'number' :
 	        		$wpcomponent_content = get_wpc_generic( $slug );
 	        		break;
@@ -314,6 +318,40 @@ function get_wpc_link( $slug = false ){
 	if( !empty( $the_chapter_slugID ) ):
 		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
 		return get_permalink( $data->meta_value);
+	endif;
+
+}
+
+/**
+ * get ID data
+ *
+ *
+ */
+function get_wpc_ID( $slug = false ){
+
+	global $post;
+	global $wpc_stories;
+	global $wpc_current_wpc;
+
+	if( empty( $wpc_stories ) ) define_wpc_stories();
+	if( empty( $wpc_stories ) ) return;
+
+	if( $slug === false ) return;
+
+	foreach( $wpc_current_wpc['contents'] as $key => $element ){
+
+		if( $element['slug'] === $slug ){
+
+			$the_chapter_slugID = $element['slug_ID'];
+			break;
+
+		}
+
+	}
+
+	if( !empty( $the_chapter_slugID ) ):
+		$data = get_metadata_by_mid ( 'post' , $the_chapter_slugID );
+		return $data->meta_value;
 	endif;
 
 }

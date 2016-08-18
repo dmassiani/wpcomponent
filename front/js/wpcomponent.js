@@ -70,7 +70,7 @@
 			    		$.each( tinymce.editors, function(e){
 
 			    			if( this.id === new_editor ){
-			    				// deja instancié 
+			    				// deja instancié
 			    				instance = true;
 			    			}
 			    		});
@@ -89,7 +89,7 @@
 
 					}
 
-					
+
 				}
 
 				// ----------------------------------------------
@@ -140,9 +140,9 @@
 	var selectedButton, imageRemover;
 
 	$(document).on('click','.wpc_element_image .upload_image_button', function(e) {
- 
+
         e.preventDefault();
- 
+
  		selectedButton = $(this);
  		imageRemover = $(this).closest('.wpc_element').find('.wpc_imageRemover');
 
@@ -152,7 +152,7 @@
 	      file_frame.open();
 	      return;
 	    }
- 
+
 	    // Create the media frame.
 	    file_frame = wp.media.frames.file_frame = wp.media({
 	      title: jQuery( this ).data( 'upload_image' ),
@@ -171,10 +171,10 @@
 
 			// check if isset thumbnail size (wordpress don't generate thumbnail for small images)
 			if( $(attachment.sizes.thumbnail).length ) {
-				src = attachment.sizes.thumbnail.url
+					src = attachment.sizes.thumbnail.url
 			} else {
-				// if !isset thumbnail size, img is small so we can display url without size
-				src = attachment.url
+					// if !isset thumbnail size, img is small so we can display url without size
+					src = attachment.url
 			}
 			$('<img>', {
 			    src: src
@@ -191,7 +191,7 @@
 
 	    // Finally, open the modal
 	    file_frame.open();
- 
+
     });
 
 	// ================================
@@ -234,7 +234,7 @@
 	$(document).on('click', '.postbox-container .postbox .handlediv', function(){
 
 		var postbox = $(this).closest('.postbox');
-		
+
 		if( !postbox.hasClass('closed') )
 		{
 			jQuery.each( tinyMCE.editors , function(i,e){
@@ -260,7 +260,32 @@
 	// link post type selector
 	// ================================
 	$(document).on('change', '.wpc_link_posttype_selector', function(e){
-		
+
+		e.preventDefault();
+
+		$selecteur = jQuery(this).closest('select');
+
+		var data = {
+			'action': 'wpcomponent_getPosts_byType',
+			'type': jQuery(this).val()
+		};
+
+	    $.post( ajaxUrl, data, function(response) {
+
+	    	$post = $selecteur.closest('.inner').find('select').eq(1);
+	    	// on supprime toute les options
+	    	$post.find('option').remove();
+	    	$post.append( response );
+
+	    });
+
+	});
+
+	// ================================
+	// id post type selector
+	// ================================
+	$(document).on('change', '.wpc_id_posttype_selector', function(e){
+
 		e.preventDefault();
 
 		$selecteur = jQuery(this).closest('select');
@@ -307,7 +332,7 @@
 		// dans tous les cas, je ferme les settings
 		postbox.removeClass('settings-active');
 		e.stopPropagation();
-		
+
 	});
 
 	// ================================
@@ -360,8 +385,8 @@
 					if( buttonRemove.closest('.wpc_container').hasClass('wpc_container-first') ) isFirst = true;
 
 					buttonRemove.closest('.wpc_container').remove();
-					
-					/** 
+
+					/**
 					 * Si c'est le premier on hérite la class first sur le suivant
 					 *
 					 */
@@ -383,8 +408,8 @@
 			if( buttonRemove.closest('.wpc_container').hasClass('wpc_container-first') ) isFirst = true;
 
 			buttonRemove.closest('.wpc_container').remove();
-			
-			/** 
+
+			/**
 			 * Si c'est le premier on hérite la class first sur le suivant
 			 *
 			 */

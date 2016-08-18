@@ -82,6 +82,10 @@ class wpcomponent_editors
 						$this->getNewLink();
 						break;
 
+					case 'id':
+						$this->getNewID();
+						break;
+
 					case 'number':
 						$this->getNewNumber();
 						break;
@@ -382,6 +386,101 @@ class wpcomponent_editors
 					}
 					?>
 					<input type="checkbox" name="wpcomponent_switch_[]" class="js-switch" <?=$checked?> />
+			</div>
+		</div>
+    	<?php
+
+        $this->closeElement();
+
+    }
+
+	/* ---------------------------------------------------
+
+		Nouveau ID
+
+	/* --------------------------------------------------- */
+
+    public function getNewID()
+    {
+    	$this->type = 'id';
+    	$this->openElement();
+    	$optionsType = '<option>Select post type</option>';
+    	$selectType = null;
+    	$selectPage = null;
+		$options = '<option>Select post</option>';
+
+    	if( !empty( $this->content ) && $this->content != 'selectpost' ){
+				$selectType = get_post_type( $this->content );
+				$selectPage = get_post( $this->content );
+				// sometimes have an error view debug log
+				$selectedPage = $selectPage->post_name;
+    	}
+
+    		// get all custom post type
+		$args = array(
+		   'public'   => true,
+		   '_builtin' => true
+		);
+
+		$output = 'objects'; // names or objects, note names is the default
+
+		$post_types = get_post_types( $args, $output );
+
+		foreach ( $post_types as $post_type ) {
+
+			$selected = ( $post_type->name === $selectType ) ? 'selected' : '';
+			$optionsType.= '<option value="' . $post_type->name . '"' . $selected . '>' . $post_type->name . '</option>';
+
+		}
+
+		$args = array(
+		   'public'   => true,
+		   '_builtin' => false
+		);
+
+		$post_types = get_post_types( $args, $output );
+
+		foreach ( $post_types  as $post_type ) {
+
+			$selected = ( $post_type->name == $selectType ) ? 'selected' : '';
+			$optionsType.= '<option value="' . $post_type->name . '"' . $selected . '>' . $post_type->name . '</option>';
+
+		}
+
+
+		// si j'ai une valeur enregistré, je génère les options de page :
+		if( !empty( $this->content ) ){
+
+	        $args = array(
+	            'posts_per_page'   => -1,
+	            'orderby'          => 'name',
+	            'order'            => 'ASC',
+	            'post_type'        => $selectType,
+	            'post_status'      => 'publish'
+	        );
+	        $posts_array = get_posts( $args );
+
+	        foreach ( $posts_array as $post_type ) {
+	        	$selected = ( $post_type->ID == $this->content ) ? 'selected' : '';
+	            $options.= '<option value="' . $post_type->ID . '"' . $selected . '>' . $post_type->post_title . '</option>';
+	        }
+
+		}
+
+
+    	?>
+
+    	<div class="wpc_element-input wp-core-ui wp-title-wrap">
+    		<div class="inner">
+
+					<select id="<?=$this->container_id?>_id_selector" class="wpc_id_posttype_selector">
+						<?=$optionsType?>
+					</select>
+
+					<select name="wpcomponent_id_[]" id="<?=$this->container_id?>_id" class="disable">
+						<?=$options?>
+					</select>
+
 			</div>
 		</div>
     	<?php

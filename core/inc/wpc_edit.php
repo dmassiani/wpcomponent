@@ -177,6 +177,10 @@ class wpcomponent_edit
 							$editeur->getNewLink();
 							break;
 
+						case 'id':
+							$editeur->getNewID();
+							break;
+
 						case 'number':
 							$editeur->getNewNumber();
 							break;

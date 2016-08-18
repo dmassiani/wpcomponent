@@ -50,6 +50,10 @@ class wpcomponent_post
 					$wpc_links = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_link_']);
 				}
 
+				if( !empty( $_POST['wpcomponent_id_'] ) && is_array($_POST['wpcomponent_id_']) ){
+					$wpc_ids = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_id_']);
+				}
+
 				if( !empty( $_POST['wpcomponent_number_'] ) && is_array($_POST['wpcomponent_number_']) ){
 					$wpc_numbers = array_map( array( "wpcomponent_utility", "sanitizeArrayInt" ), $_POST['wpcomponent_number_']);
 				}
@@ -137,6 +141,7 @@ class wpcomponent_post
 					$i_optionselect 	= 0;
 					$i_optionswitch 	= 0;
 					$i_link 			= 0;
+					$i_id 				= 0;
 					$i_image 			= 0;
 					$i_number 			= 0;
 					$i_options 			= 0;
@@ -211,6 +216,12 @@ class wpcomponent_post
 									case 'link':
 										$wpc_newpost['post_content'] = $wpc_links[ $i_link ];
 										$i_link++;
+										$i_fields++;
+										break;
+
+									case 'id':
+										$wpc_newpost['post_content'] = $wpc_ids[ $i_id ];
+										$i_id++;
 										$i_fields++;
 										break;
 
